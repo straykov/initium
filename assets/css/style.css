@@ -12,20 +12,14 @@ input,
 textarea,
 button {
   outline: none;
-  font-family: f_Default;
-}
-a {
-  padding-top: 0.6em;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: #fff;
-  font-size: 14px;
-  line-height: 20px;
+a {
+  padding-top: 0.2em;
 }
 a,
 a:visited {
@@ -65,4 +59,10 @@ a:visited.lite:hover {
   border-color: rgba(242,242,1,0.5);
   -webkit-transition: 0s ease;
           transition: 0s ease;
+}
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #fff;
+  font-size: 14px;
+  line-height: 20px;
 }
