@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+
     watch: {
       options: {
         atBegin: true
@@ -8,9 +9,9 @@ module.exports = function(grunt) {
 
       stylus: {
         files: 'assets/source/styles/*.styl',
-        tasks: ['stylus', 'autoprefixer']
+        tasks: ['stylus', 'postcss:dist']
       },
-      
+
       js: {
         files: 'assets/source/scripts/*.js',
         tasks: ['concat', 'uglify']
@@ -29,20 +30,28 @@ module.exports = function(grunt) {
       }
     },
 
+    postcss: {
+      options: {
+        map: false,
+        processors: [
+          require('autoprefixer-core')({browsers:
+            ['last 3 versions', '> 1%', 'IE 8']
+          }),
+          require('cssnano')()
+        ]
+      },
+
+      dist: {
+        src: 'assets/css/*.css'
+      }
+    },
+
     concat: {
       js: {
         files: {
           'assets/js/scripts.js': [
             'assets/source/scripts/*.js'
           ]
-        }
-      }
-    },
-
-    autoprefixer: {
-      main: {
-        files: {
-          'assets/css/style.css': 'assets/css/style.css'
         }
       }
     },
@@ -54,13 +63,14 @@ module.exports = function(grunt) {
         }
       }
     }
+
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['stylus', 'autoprefixer', 'concat', 'uglify']);
+  grunt.registerTask('default', ['stylus', 'postcss:dist', 'concat', 'uglify']);
 };
