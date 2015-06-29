@@ -7,6 +7,8 @@
     "grunt-contrib-stylus": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
-    "grunt-postcss": "latest"
+    "grunt-postcss": "latest",
+    "autoprefixer-core": "latest",
+    "cssnano": "latest"
   }
 }
