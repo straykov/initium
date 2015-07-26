@@ -1,14 +1,15 @@
 {
   "name": "Initium",
-  "version": "1.3.0",
+  "version": "2.0",
   "devDependencies": {
-    "grunt": "latest",
-    "grunt-contrib-concat": "latest",
-    "grunt-contrib-stylus": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-contrib-watch": "latest",
-    "grunt-postcss": "latest",
+    "gulp": "latest",
+    "gulp-stylus": "latest",
+    "gulp-postcss": "latest",
+    "gulp-cssnano": "latest",
     "autoprefixer-core": "latest",
-    "cssnano": "latest"
+    "gulp-concat": "latest",
+    "gulp-uglify": "latest",
+    "gulp-rename": "latest",
+    "gulp-connect": "latest"
   }
 }
