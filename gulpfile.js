@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     connect = require('gulp-connect');
 
-// Пути к ресурсам проекта
+// Ресурсы проекта
 var paths = {
   styles: 'assets/source/styles/',
   css: 'assets/css/',
@@ -19,12 +19,12 @@ var paths = {
   html: ''
 }
 
-// Сборка проекта
+// Одноразовая сборка проекта
 gulp.task('default', function() {
   gulp.start('styles', 'nanocss', 'scripts');
 });
 
-// Сборка проекта c авторефрешем
+// Запуск живой сборки
 gulp.task('live', function() {
   gulp.start('connect', 'styles', 'nanocss', 'scripts', 'watch');
 });
@@ -36,11 +36,12 @@ gulp.task('watch', function() {
   gulp.watch(paths.html + '*.html', ['html']);
 });
 
-// ЦСС
+// Компиляция стилей, добавление префиксов
 gulp.task('styles', function () {
   var processors = [
     autoprefixer({browsers:['last 3 versions', '> 1%', 'IE 8']})
   ];
+
   return gulp.src(paths.styles + 'layout.styl')
   .pipe(stylus())
   .pipe(rename('style.css'))
@@ -49,23 +50,23 @@ gulp.task('styles', function () {
   .pipe(connect.reload());
 });
 
-// Минифицируем ЦСС
+// Сжатие ЦСС
 gulp.task('nanocss', function () {
   return gulp.src(paths.css + '*.css')
-    .pipe(nano())
-    .pipe(gulp.dest(paths.css))
+  .pipe(nano())
+  .pipe(gulp.dest(paths.css))
 });
 
-// Собираем скрипты в один файл и минифицируем
+// Сборка и минификация скриптов
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts + '*.js')
-    .pipe(concat('scripts.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest(paths.js))
-    .pipe(connect.reload());
+  .pipe(concat('scripts.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest(paths.js))
+  .pipe(connect.reload());
 });
 
-// Запускаем локальный сервер
+// Запуск локального сервера
 gulp.task('connect', function() {
   connect.server({
     root: '.',
@@ -74,13 +75,13 @@ gulp.task('connect', function() {
   });
 });
 
-// Обновляем страницу при измении ХТМЛ
+// Рефреш ХТМЛ-страниц
 gulp.task('html', function () {
   gulp.src(paths.html + '*.html')
-    .pipe(connect.reload());
+  .pipe(connect.reload());
 });
 
-// Ловим ошибки
+// Ошибки
 function errorHandler (error) {
   console.log(error.toString());
   this.emit('end');
