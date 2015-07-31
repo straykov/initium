@@ -1,6 +1,6 @@
 {
   "name": "Initium",
-  "version": "2.0",
+  "version": "2.0.0",
   "devDependencies": {
     "gulp": "latest",
     "gulp-stylus": "latest",
