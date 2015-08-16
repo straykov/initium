@@ -8,7 +8,9 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     nano = require('gulp-cssnano'),
     rename = require('gulp-rename'),
-    connect = require('gulp-connect');
+    connect = require('gulp-connect'),
+    open = require('open'),
+    portfinder = require('portfinder');
 
 // Ресурсы проекта
 var paths = {
@@ -17,7 +19,7 @@ var paths = {
   scripts: 'assets/source/scripts/',
   js: 'assets/js/',
   html: ''
-}
+};
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
@@ -54,7 +56,7 @@ gulp.task('styles', function () {
 gulp.task('nanocss', function () {
   return gulp.src(paths.css + '*.css')
   .pipe(nano())
-  .pipe(gulp.dest(paths.css))
+  .pipe(gulp.dest(paths.css));
 });
 
 // Сборка и минификация скриптов
@@ -68,11 +70,17 @@ gulp.task('scripts', function() {
 
 // Запуск локального сервера
 gulp.task('connect', function() {
-  connect.server({
-    root: '.',
-    port: 7778,
-    livereload: true
+  portfinder.getPort(function (err, port){
+    connect.server({
+      root: '.',
+      port: port,
+      livereload: {
+        port: getRandomInt(32000, 40000)
+      }
+    });
+    open('http://localhost:' + port + '/');
   });
+
 });
 
 // Рефреш ХТМЛ-страниц
@@ -85,4 +93,8 @@ gulp.task('html', function () {
 function errorHandler (error) {
   console.log(error.toString());
   this.emit('end');
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
