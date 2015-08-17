@@ -8,9 +8,9 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     nano = require('gulp-cssnano'),
     rename = require('gulp-rename'),
-    connect = require('gulp-connect'),
-    open = require('open'),
-    portfinder = require('portfinder');
+    portfinder = require('portfinder'),
+    browserSync = require("browser-sync"),
+    reload = browserSync.reload;
 
 // Ресурсы проекта
 var paths = {
@@ -28,7 +28,12 @@ gulp.task('default', function() {
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('connect', 'styles', 'nanocss', 'scripts', 'watch');
+  gulp.start('server', 'styles', 'nanocss', 'scripts', 'watch');
+});
+
+// Запуск живой сборки с туннелем
+gulp.task('web-live', function() {
+  gulp.start('web-server', 'styles', 'nanocss', 'scripts', 'watch');
 });
 
 gulp.task('watch', function() {
@@ -49,7 +54,7 @@ gulp.task('styles', function () {
   .pipe(rename('style.css'))
   .pipe(postcss(processors))
   .pipe(gulp.dest(paths.css))
-  .pipe(connect.reload());
+  .pipe(reload({stream: true}));
 });
 
 // Сжатие ЦСС
@@ -65,36 +70,44 @@ gulp.task('scripts', function() {
   .pipe(concat('scripts.js'))
   .pipe(uglify())
   .pipe(gulp.dest(paths.js))
-  .pipe(connect.reload());
+  .pipe(reload({stream: true}));
 });
 
 // Запуск локального сервера
-gulp.task('connect', function() {
+gulp.task('server', function() {
   portfinder.getPort(function (err, port){
-    connect.server({
-      root: '.',
-      port: port,
-      livereload: {
-        port: getRandomInt(32000, 40000)
-      }
+    browserSync({
+      server: {
+        baseDir: "."
+      },
+      host: 'localhost',
+      port: port
     });
-    open('http://localhost:' + port + '/');
   });
+});
 
+// Запуск локального сервера c туннелем
+gulp.task('web-server', function() {
+  portfinder.getPort(function (err, port){
+    browserSync({
+      server: {
+        baseDir: "."
+      },
+      tunnel: true,
+      host: 'localhost',
+      port: port
+    });
+  });
 });
 
 // Рефреш ХТМЛ-страниц
 gulp.task('html', function () {
   gulp.src(paths.html + '*.html')
-  .pipe(connect.reload());
+  .pipe(reload({stream: true}));
 });
 
 // Ошибки
 function errorHandler (error) {
   console.log(error.toString());
   this.emit('end');
-}
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
 }
