@@ -10,6 +10,7 @@
     "gulp-concat": "latest",
     "gulp-uglify": "latest",
     "gulp-rename": "latest",
-    "gulp-connect": "latest"
+    "browser-sync": "latest",
+    "portfinder": "latest"
   }
 }

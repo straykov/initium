@@ -8,7 +8,9 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     nano = require('gulp-cssnano'),
     rename = require('gulp-rename'),
-    connect = require('gulp-connect');
+    portfinder = require('portfinder'),
+    browserSync = require("browser-sync"),
+    reload = browserSync.reload;
 
 // Ресурсы проекта
 var paths = {
@@ -17,7 +19,7 @@ var paths = {
   scripts: 'assets/source/scripts/',
   js: 'assets/js/',
   html: ''
-}
+};
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
@@ -26,7 +28,12 @@ gulp.task('default', function() {
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('connect', 'styles', 'nanocss', 'scripts', 'watch');
+  gulp.start('server', 'styles', 'nanocss', 'scripts', 'watch');
+});
+
+// Запуск живой сборки с туннелем
+gulp.task('web-live', function() {
+  gulp.start('web-server', 'styles', 'nanocss', 'scripts', 'watch');
 });
 
 gulp.task('watch', function() {
@@ -47,14 +54,14 @@ gulp.task('styles', function () {
   .pipe(rename('style.css'))
   .pipe(postcss(processors))
   .pipe(gulp.dest(paths.css))
-  .pipe(connect.reload());
+  .pipe(reload({stream: true}));
 });
 
 // Сжатие ЦСС
 gulp.task('nanocss', function () {
   return gulp.src(paths.css + '*.css')
   .pipe(nano())
-  .pipe(gulp.dest(paths.css))
+  .pipe(gulp.dest(paths.css));
 });
 
 // Сборка и минификация скриптов
@@ -63,22 +70,40 @@ gulp.task('scripts', function() {
   .pipe(concat('scripts.js'))
   .pipe(uglify())
   .pipe(gulp.dest(paths.js))
-  .pipe(connect.reload());
+  .pipe(reload({stream: true}));
 });
 
 // Запуск локального сервера
-gulp.task('connect', function() {
-  connect.server({
-    root: '.',
-    port: 7778,
-    livereload: true
+gulp.task('server', function() {
+  portfinder.getPort(function (err, port){
+    browserSync({
+      server: {
+        baseDir: "."
+      },
+      host: 'localhost',
+      port: port
+    });
+  });
+});
+
+// Запуск локального сервера c туннелем
+gulp.task('web-server', function() {
+  portfinder.getPort(function (err, port){
+    browserSync({
+      server: {
+        baseDir: "."
+      },
+      tunnel: true,
+      host: 'localhost',
+      port: port
+    });
   });
 });
 
 // Рефреш ХТМЛ-страниц
 gulp.task('html', function () {
   gulp.src(paths.html + '*.html')
-  .pipe(connect.reload());
+  .pipe(reload({stream: true}));
 });
 
 // Ошибки
