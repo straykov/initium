@@ -1,6 +1,6 @@
 {
   "name": "Initium",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "devDependencies": {
     "gulp": "latest",
     "gulp-stylus": "latest",
@@ -11,6 +11,7 @@
     "gulp-uglify": "latest",
     "gulp-rename": "latest",
     "browser-sync": "latest",
-    "portfinder": "latest"
+    "portfinder": "latest",
+    "gulp-html-tag-include": "latest"
   }
 }

@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     portfinder = require('portfinder'),
     browserSync = require("browser-sync"),
+    include = require("gulp-html-tag-include"),
     reload = browserSync.reload;
 
 // Ресурсы проекта
@@ -18,29 +19,38 @@ var paths = {
   css: 'assets/css/',
   scripts: 'assets/source/scripts/',
   js: 'assets/js/',
+  templates: 'templates/',
   html: ''
 };
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
-  gulp.start('styles', 'nanocss', 'scripts');
+  gulp.start('include', 'styles', 'nanocss', 'scripts');
 });
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('server', 'styles', 'nanocss', 'scripts', 'watch');
+  gulp.start('server', 'include', 'styles', 'nanocss', 'scripts', 'watch');
 });
 
-// Запуск живой сборки с туннелем
-gulp.task('web-live', function() {
-  gulp.start('web-server', 'styles', 'nanocss', 'scripts', 'watch');
+// Туннель
+gulp.task('external-world', function() {
+  gulp.start('web-server', 'include', 'styles', 'nanocss', 'scripts', 'watch');
 });
 
+// Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
   gulp.watch(paths.styles + '*.styl', ['styles']);
   gulp.watch(paths.css + '*.css', ['nanocss']);
   gulp.watch(paths.scripts + '*.js', ['scripts']);
-  gulp.watch(paths.html + '*.html', ['html']);
+  gulp.watch(paths.templates + '*.html', ['include', 'html']);
+});
+
+// Шаблонизация
+gulp.task('include', function() {
+  return gulp.src(paths.templates + '*.html')
+  .pipe(include())
+  .pipe(gulp.dest(paths.html));
 });
 
 // Компиляция стилей, добавление префиксов
