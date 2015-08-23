@@ -1,0 +1,13 @@
+/* Ссылки */
+a, a:visited {
+  color: #0072ba;
+  text-decoration: none;
+  border-bottom: 1px inset rgba(0, 114, 186, .5);
+  transition: 0.5s ease;
+
+  &:hover {
+    color: #d04000;
+    border-color: rgba(208, 64, 0, .5);
+    transition: 0s ease;
+  }
+}

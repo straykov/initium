@@ -1,7 +1,6 @@
 'use strict';
 
 var gulp = require('gulp'),
-    stylus = require('gulp-stylus'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer-core'),
     uglify = require('gulp-uglify'),
@@ -11,6 +10,9 @@ var gulp = require('gulp'),
     portfinder = require('portfinder'),
     browserSync = require("browser-sync"),
     include = require("gulp-html-tag-include"),
+    nested = require("postcss-nested"),
+    cssnext = require("gulp-cssnext"),
+    vars = require('postcss-simple-vars'),
     reload = browserSync.reload;
 
 // Ресурсы проекта
@@ -25,23 +27,22 @@ var paths = {
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
-  gulp.start('include', 'styles', 'nanocss', 'scripts');
+  gulp.start('include', 'styles', 'scripts');
 });
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('server', 'include', 'styles', 'nanocss', 'scripts', 'watch');
+  gulp.start('server', 'include', 'styles', 'scripts', 'watch');
 });
 
 // Туннель
 gulp.task('external-world', function() {
-  gulp.start('web-server', 'include', 'styles', 'nanocss', 'scripts', 'watch');
+  gulp.start('web-server', 'include', 'styles', 'scripts', 'watch');
 });
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  gulp.watch(paths.styles + '*.styl', ['styles']);
-  gulp.watch(paths.css + '*.css', ['nanocss']);
+  gulp.watch(paths.styles + '*.css', ['styles']);
   gulp.watch(paths.scripts + '*.js', ['scripts']);
   gulp.watch(paths.templates + '*.html', ['include', 'html']);
   gulp.watch(paths.templates + 'blocks/*.html', ['include', 'html']);
@@ -57,22 +58,17 @@ gulp.task('include', function() {
 // Компиляция стилей, добавление префиксов
 gulp.task('styles', function () {
   var processors = [
-    autoprefixer({browsers:['last 3 versions', '> 1%', 'IE 8']})
+    vars,
+    nested
   ];
-
-  return gulp.src(paths.styles + 'layout.styl')
-  .pipe(stylus())
-  .pipe(rename('style.css'))
+  return gulp.src(paths.styles + 'layout.css')
+  .pipe(cssnext({
+      compress: true
+    }))
   .pipe(postcss(processors))
+  .pipe(rename('style.css'))
   .pipe(gulp.dest(paths.css))
   .pipe(reload({stream: true}));
-});
-
-// Сжатие ЦСС
-gulp.task('nanocss', function () {
-  return gulp.src(paths.css + '*.css')
-  .pipe(nano())
-  .pipe(gulp.dest(paths.css));
 });
 
 // Сборка и минификация скриптов

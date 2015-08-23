@@ -1,9 +1,8 @@
 {
   "name": "Initium",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "devDependencies": {
     "gulp": "latest",
-    "gulp-stylus": "latest",
     "gulp-postcss": "latest",
     "gulp-cssnano": "latest",
     "autoprefixer-core": "latest",
@@ -12,6 +11,9 @@
     "gulp-rename": "latest",
     "browser-sync": "latest",
     "portfinder": "latest",
-    "gulp-html-tag-include": "latest"
+    "gulp-html-tag-include": "latest",
+    "postcss-nested": "latest",
+    "gulp-cssnext": "latest",
+    "postcss-simple-vars": "latest"
   }
 }

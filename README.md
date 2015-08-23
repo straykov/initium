@@ -23,4 +23,24 @@ gulp external-world
 ```
 
 ##Шаблонизация
-Шаблоны собираются в папке `templates` с помощью тегов `<include>`. Составные части лежат в `blocks`. Переменные — через @@ (см. https://github.com/straykov/gulp-html-tag-include). Боевые файлы автоматически собираются в корне проекта.
+Шаблоны собираются в папке `templates` с помощью тегов `<include>`. Составные части лежат в `blocks`. Переменные — через `@@var` (см. [gulp-html-tag-include](https://github.com/straykov/gulp-html-tag-include)). Боевые файлы автоматически собираются в корне проекта.
+
+##Стили
+Верстаются в `assets/source/styles/layout.css`, компилируются в `assets/css/style.css`.
+
+###PostCSS
+1. Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
+```css
+$f_Helvetica: "Helvetica Neue", Arial, sans-serif;
+```
+2. Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов в БЭМе:
+```css
+.block {
+  ...
+
+  &__element {
+    ...
+  }
+}
+```
+3. [CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.

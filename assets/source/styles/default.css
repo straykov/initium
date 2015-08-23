@@ -1,0 +1,30 @@
+/*
+* Дефолтные стили
+*/
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  text-size-adjust: 100%;
+}
+
+/* Формы */
+input, textarea, button {
+  outline: none;
+  font-family: $f_Helvetica;
+}
+
+/* Аккуратные таблицы */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Без разрывов в многострочных ссылках */
+a {
+  padding-top: .2em;
+}
