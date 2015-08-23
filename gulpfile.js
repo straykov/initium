@@ -44,6 +44,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.css + '*.css', ['nanocss']);
   gulp.watch(paths.scripts + '*.js', ['scripts']);
   gulp.watch(paths.templates + '*.html', ['include', 'html']);
+  gulp.watch(paths.templates + 'blocks/*.html', ['include', 'html']);
 });
 
 // Шаблонизация
