@@ -28,7 +28,7 @@ gulp external-world
 ##Стили
 Верстаются в `assets/source/styles/layout.css`, компилируются в `assets/css/style.css`.
 
-###PostCSS
+####PostCSS
 Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
 ```css
 $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
