@@ -81,6 +81,7 @@ gulp.task('server', function() {
         baseDir: "."
       },
       host: 'localhost',
+      notify: false,
       port: port
     });
   });
@@ -95,6 +96,7 @@ gulp.task('web-server', function() {
       },
       tunnel: true,
       host: 'localhost',
+      notify: false,
       port: port
     });
   });
