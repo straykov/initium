@@ -29,11 +29,11 @@ gulp external-world
 Верстаются в `assets/source/styles/layout.css`, компилируются в `assets/css/style.css`.
 
 ###PostCSS
-1. Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
+Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
 ```css
 $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 ```
-2. Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов в БЭМе:
+Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов в БЭМе:
 ```css
 .block {
   ...
@@ -43,4 +43,4 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
   }
 }
 ```
-3. [CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
+[CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
