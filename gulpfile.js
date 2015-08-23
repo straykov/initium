@@ -5,7 +5,6 @@ var gulp = require('gulp'),
     autoprefixer = require('autoprefixer-core'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
-    nano = require('gulp-cssnano'),
     rename = require('gulp-rename'),
     portfinder = require('portfinder'),
     browserSync = require("browser-sync"),
@@ -13,6 +12,7 @@ var gulp = require('gulp'),
     nested = require("postcss-nested"),
     cssnext = require("gulp-cssnext"),
     vars = require('postcss-simple-vars'),
+    nano = require('gulp-cssnano'),
     reload = browserSync.reload;
 
 // Ресурсы проекта
@@ -62,11 +62,10 @@ gulp.task('styles', function () {
     nested
   ];
   return gulp.src(paths.styles + 'layout.css')
-  .pipe(cssnext({
-      compress: true
-    }))
+  .pipe(cssnext())
   .pipe(postcss(processors))
   .pipe(rename('style.css'))
+  .pipe(nano())
   .pipe(gulp.dest(paths.css))
   .pipe(reload({stream: true}));
 });

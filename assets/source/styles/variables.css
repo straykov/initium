@@ -1,7 +1,5 @@
 $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 
-$c_Black: rgba(0, 0, 0, 1);
 $c_Gray: rgba(0, 0, 0, .5);
-$c_White: rgba(255, 255, 255, 1);
 
 @custom-media --latex-test (width >= 2998px) and (max-width <= 3000px);

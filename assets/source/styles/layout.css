@@ -4,6 +4,10 @@
 
 @import 'typo.css';
 
+/*
+* Основные стили
+*/
+
 body {
   font-family: $f_Helvetica;
   background: rgba(255, 255, 255, 1);
