@@ -65,7 +65,7 @@ gulp.task('styles', function () {
   .pipe(cssnext())
   .pipe(postcss(processors))
   .pipe(rename('style.css'))
-  .pipe(nano({convertValues: {length: false}}))
+  .pipe(nano({safe: true}))
   .pipe(gulp.dest(paths.css))
   .pipe(reload({stream: true}));
 });
