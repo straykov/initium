@@ -2,7 +2,7 @@
 
 var gulp = require('gulp'),
     postcss = require('gulp-postcss'),
-    autoprefixer = require('autoprefixer-core'),
+    autoprefixer = require('autoprefixer'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
@@ -65,7 +65,7 @@ gulp.task('styles', function () {
   .pipe(cssnext())
   .pipe(postcss(processors))
   .pipe(rename('style.css'))
-  .pipe(nano())
+  .pipe(nano({convertValues: {length: false}}))
   .pipe(gulp.dest(paths.css))
   .pipe(reload({stream: true}));
 });
