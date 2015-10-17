@@ -46,4 +46,4 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 [CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
 
 --
-Используется в проектах [Кодельной](http://code.straykov.ru) <img src="http://demo.straykov.ru/code.png" height="19">
+Используется в проектах [Кодельной](http://code.straykov.ru) <img src="http://code.straykov.ru/assets/img/logo.svg" height="19">
