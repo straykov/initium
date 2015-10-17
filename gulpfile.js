@@ -1,19 +1,22 @@
 'use strict';
 
 var gulp = require('gulp'),
+    rename = require('gulp-rename'),
+    gutil = require('gulp-util'),
+    plumber = require('gulp-plumber'),
+    portfinder = require('portfinder'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    portfinder = require('portfinder'),
-    browserSync = require("browser-sync"),
-    include = require("gulp-html-tag-include"),
     nested = require("postcss-nested"),
     cssnext = require("gulp-cssnext"),
     vars = require('postcss-simple-vars'),
     nano = require('gulp-cssnano'),
-    reload = browserSync.reload;
+    browserSync = require("browser-sync"),
+    reload = browserSync.reload,
+    uglify = require('gulp-uglify'),
+    concat = require('gulp-concat'),
+    eslint = require('gulp-eslint'),
+    include = require("gulp-html-tag-include");
 
 // Ресурсы проекта
 var paths = {
@@ -44,13 +47,14 @@ gulp.task('external-world', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.styles + '*.css', ['styles']);
   gulp.watch(paths.scripts + '*.js', ['scripts']);
-  gulp.watch(paths.templates + '*.html', ['include', 'html']);
+  gulp.watch(paths.templates + '**/*.html', ['include', 'html']);
   gulp.watch(paths.templates + 'blocks/*.html', ['include', 'html']);
 });
 
 // Шаблонизация
 gulp.task('include', function() {
   return gulp.src(paths.templates + '*.html')
+  .pipe(plumber({errorHandler: onError}))
   .pipe(include())
   .pipe(gulp.dest(paths.html));
 });
@@ -62,10 +66,11 @@ gulp.task('styles', function () {
     nested
   ];
   return gulp.src(paths.styles + 'layout.css')
+  .pipe(plumber({errorHandler: onError}))
   .pipe(cssnext())
   .pipe(postcss(processors))
   .pipe(rename('style.css'))
-  .pipe(nano({safe: true}))
+  .pipe(nano({convertValues: {length: false}}))
   .pipe(gulp.dest(paths.css))
   .pipe(reload({stream: true}));
 });
@@ -73,6 +78,9 @@ gulp.task('styles', function () {
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts + '*.js')
+  .pipe(plumber({errorHandler: onError}))
+  .pipe(eslint())
+  .pipe(eslint.format())
   .pipe(concat('scripts.js'))
   .pipe(uglify())
   .pipe(gulp.dest(paths.js))
@@ -115,7 +123,13 @@ gulp.task('html', function () {
 });
 
 // Ошибки
-function errorHandler (error) {
-  console.log(error.toString());
+var onError = function(error) {
+  gutil.log([
+    (error.name + ' in ' + error.plugin).bold.red,
+    '',
+    error.message,
+    ''
+  ].join('\n'));
+  gutil.beep();
   this.emit('end');
-}
+};

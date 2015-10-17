@@ -18,6 +18,9 @@
     "gulp-html-tag-include": "^1.0.1",
     "postcss-nested": "^1.0.0",
     "gulp-cssnext": "^1.0.1",
-    "postcss-simple-vars": "^1.0.1"
+    "postcss-simple-vars": "^1.0.1",
+    "gulp-plumber": "^0.6.6",
+    "gulp-eslint": "^1.0.0",
+    "gulp-util": "^3.0.2"
   }
 }
