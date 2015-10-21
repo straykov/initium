@@ -45,7 +45,7 @@ gulp.task('external-world', function() {
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  gulp.watch(paths.styles + '*.css', ['styles']);
+  gulp.watch(paths.styles + '**/*.css', ['styles']);
   gulp.watch(paths.scripts + '*.js', ['scripts']);
   gulp.watch(paths.templates + '**/*.html', ['include', 'html']);
   gulp.watch(paths.templates + 'blocks/*.html', ['include', 'html']);
