@@ -8,8 +8,9 @@ var gulp = require('gulp'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
     nested = require("postcss-nested"),
-    cssnext = require("gulp-cssnext"),
+    cssnext = require("postcss-cssnext"),
     vars = require('postcss-simple-vars'),
+    imprt = require('postcss-import'),
     nano = require('gulp-cssnano'),
     browserSync = require("browser-sync"),
     reload = browserSync.reload,
@@ -62,12 +63,14 @@ gulp.task('include', function() {
 // Компиляция стилей, добавление префиксов
 gulp.task('styles', function () {
   var processors = [
-    vars,
-    nested
+    imprt(),
+    cssnext(),
+    vars(),
+    nested(),
+    autoprefixer(),
   ];
   return gulp.src(paths.styles + 'layout.css')
   .pipe(plumber({errorHandler: onError}))
-  .pipe(cssnext())
   .pipe(postcss(processors))
   .pipe(rename('style.css'))
   .pipe(nano({convertValues: {length: false}}))
