@@ -86,7 +86,7 @@ gulp.task('scripts', function() {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(webpack())
-    .pipe(concat('scripts.js'))
+    .pipe(rename('scripts.js'))
     .pipe(uglify())
     .pipe(gulp.dest(paths.js))
     .pipe(reload({stream: true}));
