@@ -81,7 +81,7 @@ gulp.task('styles', function () {
 
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
-  return gulp.src(paths.scripts + '*.js')
+  return gulp.src(paths.scripts + 'index.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint())
     .pipe(eslint.format())
