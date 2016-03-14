@@ -1,23 +1,24 @@
 'use strict';
 
-var gulp = require('gulp'),
-    rename = require('gulp-rename'),
-    gutil = require('gulp-util'),
-    plumber = require('gulp-plumber'),
-    portfinder = require('portfinder'),
-    postcss = require('gulp-postcss'),
-    autoprefixer = require('autoprefixer'),
-    nested = require("postcss-nested"),
-    cssnext = require("postcss-cssnext"),
-    vars = require('postcss-simple-vars'),
-    imprt = require('postcss-import'),
-    nano = require('gulp-cssnano'),
-    browserSync = require("browser-sync"),
-    reload = browserSync.reload,
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    eslint = require('gulp-eslint'),
-    include = require("gulp-html-tag-include");
+var gulp = require('gulp');
+var rename = require('gulp-rename');
+var gutil = require('gulp-util');
+var plumber = require('gulp-plumber');
+var portfinder = require('portfinder');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var nested = require("postcss-nested");
+var cssnext = require("postcss-cssnext");
+var vars = require('postcss-simple-vars');
+var imprt = require('postcss-import');
+var nano = require('gulp-cssnano');
+var browserSync = require("browser-sync");
+var reload = browserSync.reload;
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+var eslint = require('gulp-eslint');
+var include = require("gulp-html-tag-include");
+var webpack = require('webpack-stream');
 
 // Ресурсы проекта
 var paths = {
@@ -55,9 +56,9 @@ gulp.task('watch', function() {
 // Шаблонизация
 gulp.task('include', function() {
   return gulp.src(paths.templates + '*.html')
-  .pipe(plumber({errorHandler: onError}))
-  .pipe(include())
-  .pipe(gulp.dest(paths.html));
+    .pipe(plumber({errorHandler: onError}))
+    .pipe(include())
+    .pipe(gulp.dest(paths.html));
 });
 
 // Компиляция стилей, добавление префиксов
@@ -70,24 +71,25 @@ gulp.task('styles', function () {
     autoprefixer(),
   ];
   return gulp.src(paths.styles + 'layout.css')
-  .pipe(plumber({errorHandler: onError}))
-  .pipe(postcss(processors))
-  .pipe(rename('style.css'))
-  .pipe(nano({convertValues: {length: false}}))
-  .pipe(gulp.dest(paths.css))
-  .pipe(reload({stream: true}));
+    .pipe(plumber({errorHandler: onError}))
+    .pipe(postcss(processors))
+    .pipe(rename('style.css'))
+    .pipe(nano({convertValues: {length: false}}))
+    .pipe(gulp.dest(paths.css))
+    .pipe(reload({stream: true}));
 });
 
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
-  return gulp.src(paths.scripts + '*.js')
-  .pipe(plumber({errorHandler: onError}))
-  .pipe(eslint())
-  .pipe(eslint.format())
-  .pipe(concat('scripts.js'))
-  .pipe(uglify())
-  .pipe(gulp.dest(paths.js))
-  .pipe(reload({stream: true}));
+  return gulp.src(paths.scripts + 'index.js')
+    .pipe(plumber({errorHandler: onError}))
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(webpack())
+    .pipe(rename('scripts.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.js))
+    .pipe(reload({stream: true}));
 });
 
 // Запуск локального сервера
@@ -122,7 +124,7 @@ gulp.task('web-server', function() {
 // Рефреш ХТМЛ-страниц
 gulp.task('html', function () {
   gulp.src(paths.html + '*.html')
-  .pipe(reload({stream: true}));
+    .pipe(reload({stream: true}));
 });
 
 // Ошибки
