@@ -3,7 +3,7 @@
 
 Перед первым запуском:
 ```bash
-npm install
+sudo npm install
 ```
 
 ##Режимы

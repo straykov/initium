@@ -1,13 +1,12 @@
-/* Ссылки */
+/* Ссылки
+TODO: убить блок и заменить на настоящие ссылки */
 a, a:visited {
-  color: #0072ba;
+  color: blue;
   text-decoration: none;
-  border-bottom: 1px inset rgba(0, 114, 186, .5);
   transition: 0.5s ease;
 
   &:hover {
-    color: #d04000;
-    border-color: rgba(208, 64, 0, .5);
+    color: red;
     transition: 0s ease;
   }
 }
