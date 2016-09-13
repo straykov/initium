@@ -33,12 +33,16 @@ gulp external-world
 ```css
 $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 ```
-Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов в БЭМе:
+Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов и модификаторов в БЭМе:
 ```css
 .block {
   ...
-
+  
   &__element {
+    ...
+  }
+  
+  &--modifier {
     ...
   }
 }
