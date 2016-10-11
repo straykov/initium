@@ -53,7 +53,7 @@ gulp.task('external-world', function() {
 gulp.task('watch', function() {
   var styles = {
     path: paths.styles,
-    task: gulp.watch(paths.styles + '**/*.css', ['styles'])
+    task: gulp.watch(paths.styles + '**/*.pcss', ['styles'])
   };
   var scripts = {
     path: paths.scripts,
@@ -111,7 +111,7 @@ gulp.task('styles', function () {
     vars(),
     nested()
   ];
-  return gulp.src(paths.styles + 'layout.css')
+  return gulp.src(paths.styles + 'layout.pcss')
     .pipe(plumber({errorHandler: onError}))
     .pipe(postcss(processors))
     .pipe(rename('style.css'))
