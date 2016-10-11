@@ -79,7 +79,7 @@ gulp.task('watch', function() {
   }
 
   function deleteTemplateFile (e) {
-    var folder = (e.path).split('/');
+    var folder = (e.path).split(path.sep);
     if (folder[folder.length - 2] === 'templates') {
       var filePathFromSrc = path.relative(path.resolve(paths.templates), e.path);
       var destFilePath = path.resolve('./', filePathFromSrc);
