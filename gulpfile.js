@@ -122,7 +122,7 @@ gulp.task('scripts', function() {
 
 // Сжимает как шакал! 10 шакалов из 10!
 gulp.task('images', function() {
-  gulp.src(paths.images + '/**/*.*')
+  gulp.src(paths.images + '/**/*.{png,jpg,gif,svg}')
     .pipe(cache(paths.images))
     .pipe(remember(paths.images))
     .pipe(image())
