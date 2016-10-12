@@ -22,6 +22,14 @@ var gulp = require('gulp'),
     hash = require('gulp-hash-src'),
     reload = browserSync.reload;
 
+var processors = [
+  imprt(),
+  cssnext(),
+  vars(),
+  nested(),
+  inline()
+];
+
 // Ресурсы проекта
 var paths = {
   styles: 'assets/source/styles/',
@@ -92,13 +100,6 @@ gulp.task('pug', function() {
 
 // Компиляция стилей, добавление префиксов
 gulp.task('styles', function () {
-  var processors = [
-    imprt(),
-    cssnext(),
-    vars(),
-    nested(),
-    inline()
-  ];
   return gulp.src(paths.styles + 'layout.pcss')
     .pipe(plumber({errorHandler: onError}))
     .pipe(postcss(processors))
