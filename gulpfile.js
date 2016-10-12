@@ -49,24 +49,30 @@ gulp.task('external-world', function() {
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  var styles = {
-    path: paths.styles,
-    task: gulp.watch(paths.styles + '**/*.pcss', ['styles'])
-  };
-  var scripts = {
-    path: paths.scripts,
-    task: gulp.watch(paths.scripts + '*.js', ['scripts'])
-  };
-  var templates = {
-    path: paths.templates,
-    task: gulp.watch(paths.templates + '**/*.pug', ['pug', 'html'])
-  };
-
-  var watch = [styles, scripts, templates];
+  var watch = [
+    {
+      templates: {
+        path: paths.templates,
+        task: gulp.watch(paths.templates + '**/*.pug', ['pug', 'html'])
+      }
+    },
+    {
+      styles: {
+        path: paths.styles,
+        task: gulp.watch(paths.styles + '**/*.pcss', ['styles'])
+      }
+    },
+    {
+      scripts: {
+        path: paths.scripts,
+        task: gulp.watch(paths.scripts + '*.js', ['scripts'])
+      }
+    }
+  ];
 
   for (var tasks = 0; tasks < watch.length; tasks++) {
-    var currPath = watch[tasks].path;
-    watch[tasks].task.on('change', function(event) {
+    var currPath = watch[tasks][Object.keys(watch[tasks])[0]].path;
+    (watch[tasks][Object.keys(watch[tasks])[0]].task).on('change', function(event) {
       if (event.type === 'deleted') {
         clearCache(event, currPath);
         if (currPath === paths.templates) {
