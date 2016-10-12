@@ -130,7 +130,7 @@ gulp.task('scripts', function() {
 });
 
 // Сжимает как шакал! 10 шакалов из 10!
-gulp.task('images', function(){
+gulp.task('images', function() {
   gulp.src(paths.images + '/**/*.*')
     .pipe(cache(paths.images))
     .pipe(remember(paths.images))
