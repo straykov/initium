@@ -6,8 +6,8 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     portfinder = require('portfinder'),
     postcss = require('gulp-postcss'),
-    nested = require("postcss-nested"),
-    cssnext = require("postcss-cssnext"),
+    nested = require('postcss-nested'),
+    cssnext = require('postcss-cssnext'),
     vars = require('postcss-simple-vars'),
     imprt = require('postcss-import'),
     nano = require('gulp-cssnano'),
@@ -18,11 +18,8 @@ var gulp = require('gulp'),
     inline  = require('postcss-inline-svg'),
     cache = require('gulp-cached'),
     remember = require('gulp-remember'),
-    del = require('del'),
-    path = require('path'),
     image = require('gulp-image'),
     hash = require('gulp-hash-src'),
-    debug = require('gulp-debug'),
     reload = browserSync.reload;
 
 // Ресурсы проекта
@@ -62,12 +59,6 @@ gulp.task('watch', function() {
   templates.on('change', function(event) {
     if (event.type === 'deleted') {
       clearCache(event, paths.templates);
-    }
-  });
-
-  styles.on('change', function(event) {
-    if (event.type === 'deleted') {
-      clearCache(event, paths.styles);
     }
   });
 
@@ -138,9 +129,9 @@ gulp.task('images', function() {
     .pipe(gulp.dest(paths.bundles));
 });
 
+// Хэш для CSS и JS файлов
 gulp.task('hash', ['pug'], function(){
   gulp.src('./*.html')
-    .pipe(debug())
     .pipe(hash({build_dir: "./", src_path: "./"}))
     .pipe(gulp.dest('./'));
 });
