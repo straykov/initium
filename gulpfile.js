@@ -45,22 +45,22 @@ var paths = {
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
-  gulp.start('hash', 'images', 'styles', 'scripts');
+  gulp.start('cache', 'images', 'styles', 'scripts');
 });
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('server', 'hash', 'images', 'styles', 'scripts', 'watch');
+  gulp.start('server', 'cache', 'images', 'styles', 'scripts', 'watch');
 });
 
 // Туннель
 gulp.task('external-world', function() {
-  gulp.start('web-server', 'hash', 'images', 'styles', 'scripts', 'watch');
+  gulp.start('web-server', 'cache', 'images', 'styles', 'scripts', 'watch');
 });
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  var templates = gulp.watch(paths.templates + '**/*.pug', ['hash']);
+  var templates = gulp.watch(paths.templates + '**/*.pug', ['cache']);
   var styles = gulp.watch(paths.styles + '**/*.pcss', ['styles']);
   var scripts = gulp.watch(paths.scripts + '*.js', ['scripts']);
   var images = gulp.watch(paths.images + '**/*.{png,jpg,gif,svg}', ['images']);
@@ -92,6 +92,7 @@ gulp.task('watch', function() {
 // Шаблонизация
 gulp.task('pug', function() {
   return gulp.src(paths.templates + '*.pug')
+    .pipe(debug())
     .pipe(cache(paths.templates))
     .pipe(remember(paths.templates))
     .pipe(plumber({errorHandler: onError}))
@@ -132,12 +133,12 @@ gulp.task('images', function() {
 });
 
 // Хэш для CSS и JS файлов
-gulp.task('hash', ['pug'], function(){
+gulp.task('cache', ['pug', 'html'], function(){
   gulp.src(paths.html + '*.html')
     .pipe(cachebust({
       type: 'timestamp'
     }))
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest(paths.html));
 });
 
 // Запуск локального сервера
