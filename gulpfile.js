@@ -39,7 +39,7 @@ var paths = {
   templates: 'templates/',
   images: 'assets/source/images/',
   bundles: 'assets/images/',
-  html: ''
+  html: './'
 };
 
 // Одноразовая сборка проекта
@@ -132,8 +132,8 @@ gulp.task('images', function() {
 
 // Хэш для CSS и JS файлов
 gulp.task('hash', ['pug'], function(){
-  gulp.src('./*.html')
-    .pipe(hash({build_dir: "./", src_path: "./"}))
+  gulp.src(paths.html + '*.{html}')
+
     .pipe(gulp.dest('./'));
 });
 
