@@ -20,6 +20,7 @@ var gulp = require('gulp'),
     remember = require('gulp-remember'),
     image = require('gulp-image'),
     hash = require('gulp-hash-src'),
+    debug = require('gulp-debug'),
     reload = browserSync.reload;
 
 var processors = [
@@ -39,7 +40,7 @@ var paths = {
   templates: 'templates/',
   images: 'assets/source/images/',
   bundles: 'assets/images/',
-  html: ''
+  html: './'
 };
 
 // Одноразовая сборка проекта
@@ -59,7 +60,7 @@ gulp.task('external-world', function() {
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  var templates = gulp.watch(paths.templates + '**/*.pug', ['hash', 'html']);
+  var templates = gulp.watch(paths.templates + '**/*.pug', ['hash']);
   var styles = gulp.watch(paths.styles + '**/*.pcss', ['styles']);
   var scripts = gulp.watch(paths.scripts + '*.js', ['scripts']);
   var images = gulp.watch(paths.images + '**/*.{png,jpg,gif,svg}', ['images']);
@@ -131,15 +132,18 @@ gulp.task('images', function() {
 });
 
 // Хэш для CSS и JS файлов
-gulp.task('hash', ['pug'], function(){
-  gulp.src('./*.html')
-    .pipe(hash({build_dir: "./", src_path: "./"}))
+gulp.task('hash', ['pug', 'html'], function() {
+  gulp.src(paths.html + '*.html')
+    .pipe(hash({
+      build_dir: paths.html,
+      src_path: paths.html
+    }))
     .pipe(gulp.dest('./'));
 });
 
 // Запуск локального сервера
 gulp.task('server', function() {
-  portfinder.getPort(function (err, port){
+  portfinder.getPort(function (err, port) {
     browserSync({
       server: {
         baseDir: "."
@@ -153,7 +157,7 @@ gulp.task('server', function() {
 
 // Запуск локального сервера c туннелем
 gulp.task('web-server', function() {
-  portfinder.getPort(function (err, port){
+  portfinder.getPort(function (err, port) {
     browserSync({
       server: {
         baseDir: "."
@@ -169,7 +173,7 @@ gulp.task('web-server', function() {
 // Рефреш ХТМЛ-страниц
 gulp.task('html', function () {
   gulp.src(paths.html + '*.html')
-  .pipe(reload({stream: true}));
+    .pipe(reload({stream: true}));
 });
 
 // Ошибки
