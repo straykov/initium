@@ -130,7 +130,7 @@ gulp.task('images', function() {
     .pipe(gulp.dest(paths.bundles));
 });
 
-// Хэш для CSS и JS файлов
+// Очистка кэша для CSS и JS файлов
 gulp.task('cache', ['pug', 'html'], function(){
   gulp.src(paths.html + '*.html')
     .pipe(cachebust({
