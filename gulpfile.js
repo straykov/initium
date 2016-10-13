@@ -20,7 +20,6 @@ var gulp = require('gulp'),
     remember = require('gulp-remember'),
     image = require('gulp-image'),
     cachebust = require('gulp-cache-bust'),
-    debug = require('gulp-debug'),
     reload = browserSync.reload;
 
 var processors = [
@@ -92,7 +91,6 @@ gulp.task('watch', function() {
 // Шаблонизация
 gulp.task('pug', function() {
   return gulp.src(paths.templates + '*.pug')
-    .pipe(debug())
     .pipe(cache(paths.templates))
     .pipe(remember(paths.templates))
     .pipe(plumber({errorHandler: onError}))
