@@ -15,6 +15,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     pug = require('gulp-pug'),
+    debug = require('gulp-debug'),
     inline  = require('postcss-inline-svg'),
     cache = require('gulp-cached'),
     remember = require('gulp-remember'),
@@ -131,7 +132,7 @@ gulp.task('images', function() {
 });
 
 // Очистка кэша для CSS и JS файлов
-gulp.task('cache', ['pug', 'html'], function(){
+gulp.task('cache', ['pug', 'html'], function() {
   gulp.src(paths.html + '*.html')
     .pipe(cachebust({
       type: 'timestamp'
