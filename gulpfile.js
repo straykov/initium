@@ -1,23 +1,25 @@
 'use strict';
 
-var gulp = require('gulp'),
-    rename = require('gulp-rename'),
-    gutil = require('gulp-util'),
-    plumber = require('gulp-plumber'),
-    portfinder = require('portfinder'),
-    postcss = require('gulp-postcss'),
-    autoprefixer = require('autoprefixer'),
-    nested = require("postcss-nested"),
-    cssnext = require("postcss-cssnext"),
-    vars = require('postcss-simple-vars'),
-    imprt = require('postcss-import'),
-    nano = require('gulp-cssnano'),
-    browserSync = require("browser-sync"),
-    reload = browserSync.reload,
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    eslint = require('gulp-eslint'),
-    include = require("gulp-html-tag-include");
+var gulp = require('gulp');
+var rename = require('gulp-rename');
+var gutil = require('gulp-util');
+var plumber = require('gulp-plumber');
+var portfinder = require('portfinder');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
+var nested = require("postcss-nested");
+var cssnext = require("postcss-cssnext");
+var vars = require('postcss-simple-vars');
+var imprt = require('postcss-import');
+var nano = require('gulp-cssnano');
+var browserSync = require("browser-sync");
+var reload = browserSync.reload;
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+var eslint = require('gulp-eslint');
+var include = require("gulp-html-tag-include");
+
+var babel = require("gulp-babel");
 
 // Ресурсы проекта
 var paths = {
@@ -84,6 +86,7 @@ gulp.task('scripts', function() {
   .pipe(plumber({errorHandler: onError}))
   .pipe(eslint())
   .pipe(eslint.format())
+  .pipe(babel())
   .pipe(concat('scripts.js'))
   .pipe(uglify())
   .pipe(gulp.dest(paths.js))
