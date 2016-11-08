@@ -1,6 +1,6 @@
 {
   "name": "Initium",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/straykov/initium.git"
@@ -9,6 +9,7 @@
     "autoprefixer": "^6.3.6",
     "browser-sync": "^2.12.3",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.1.2",
     "gulp-eslint": "^2.0.0",
@@ -23,5 +24,22 @@
     "postcss-import": "^8.1.0",
     "postcss-nested": "^1.0.0",
     "postcss-simple-vars": "^1.2.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "rules": {
+      "semi": 2
+    }
   }
 }
