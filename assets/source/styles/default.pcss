@@ -1,9 +1,4 @@
-/*
-* Дефолтные стили
-*/
-
-@charset 'UTF-8';
-
+/* Дефолтные стили */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -14,7 +9,7 @@
 /* Формы */
 input, textarea, button {
   outline: none;
-  font-family: $f_Helvetica;
+  font-family: $helvetica;
 }
 
 /* Аккуратные таблицы */
@@ -23,7 +18,33 @@ table {
   border-spacing: 0;
 }
 
-/* Без разрывов в многострочных ссылках */
+/* Ссылки */
+:root {
+  --link: {
+    color: $link;
+    text-decoration: none;
+    transition: 0.3s ease;
+
+    &:hover, &.hover {
+      color: $link-hover;
+      transition: 0s ease;
+    }
+  };
+}
+
+/* Основные стили */
+html {
+  background: rgba(255, 255, 255, 1);
+}
+
+body {
+  font-family: $helvetica;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 a {
-  padding-top: .2em;
+  @apply --link;
+
+  text-decoration: none;
 }
