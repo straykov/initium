@@ -26,7 +26,7 @@ gulp external-world
 Шаблоны собираются в папке `templates` с помощью тегов `<include>`. Составные части лежат в `blocks`. Переменные — через `@@var` (см. [gulp-html-tag-include](https://github.com/straykov/gulp-html-tag-include)). Боевые файлы автоматически собираются в корне проекта.
 
 ##Стили
-Верстаются в `assets/source/styles/layout.css`, компилируются в `assets/css/style.css`.
+Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`.
 
 ####PostCSS
 Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
