@@ -23,7 +23,7 @@ gulp external-world
 ```
 
 ##Шаблонизация
-Шаблоны собираются в папке `templates` с помощью `include`. Составные части лежат в `blocks`. Переменные — через `@@var` (см. [pug](https://www.npmjs.com/package/pug)). Боевые файлы автоматически собираются в корне проекта.
+Шаблоны собираются из папки `templates` с помощью [pug](https://pugjs.org). Составные части лежат в `blocks`. Боевые файлы автоматически собираются в корне проекта.
 
 ##Стили
 Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`.
