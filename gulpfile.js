@@ -20,8 +20,10 @@ var gulp = require('gulp'),
     remember = require('gulp-remember'),
     image = require('gulp-imagemin'),
     cachebust = require('gulp-cache-bust'),
-    reload = browserSync.reload,
-    babel = require("gulp-babel");
+    eslint = require('gulp-eslint'),
+    babel = require("gulp-babel"),
+    reload = browserSync.reload;
+
 
 var processors = [
   imprt(),
@@ -38,7 +40,7 @@ var paths = {
   scripts: 'assets/source/scripts/',
   js: 'assets/js/',
   templates: 'templates/',
-  images: 'assets/source/img/',
+  img: 'assets/source/img/',
   bundles: 'assets/img/',
   html: './'
 };
@@ -50,12 +52,12 @@ gulp.task('default', function() {
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('server', 'cache', 'images', 'styles', 'scripts', 'watch');
+  gulp.start('cache', 'images', 'styles', 'scripts', 'watch', 'server');
 });
 
 // Туннель
 gulp.task('external-world', function() {
-  gulp.start('web-server', 'cache', 'images', 'styles', 'scripts', 'watch');
+  gulp.start('cache', 'images', 'styles', 'scripts', 'watch', 'web-server');
 });
 
 // Федеральная служба по контролю за оборотом файлов
@@ -63,7 +65,7 @@ gulp.task('watch', function() {
   var templates = gulp.watch(paths.templates + '**/*.pug', ['cache']);
   var styles = gulp.watch(paths.styles + '**/*.pcss', ['styles']);
   var scripts = gulp.watch(paths.scripts + '*.js', ['scripts']);
-  var images = gulp.watch(paths.images + '**/*.{png,jpg,gif,svg}', ['images']);
+  var images = gulp.watch(paths.img + '**/*.{png,jpg,gif,svg}', ['images']);
 
   templates.on('change', function(event) {
     if (event.type === 'deleted') {
@@ -79,7 +81,7 @@ gulp.task('watch', function() {
 
   images.on('change', function(event) {
     if (event.type === 'deleted') {
-      clearCache(event, paths.images);
+      clearCache(event, paths.img);
     }
   });
 
@@ -113,10 +115,12 @@ gulp.task('styles', function () {
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts + '*.js')
-<<<<<<< HEAD
     .pipe(cache(paths.scripts))
     .pipe(remember(paths.scripts))
     .pipe(plumber({errorHandler: onError}))
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(babel())
     .pipe(concat('scripts.js'))
     .pipe(uglify())
     .pipe(gulp.dest(paths.js))
@@ -125,9 +129,9 @@ gulp.task('scripts', function() {
 
 // Сжимает как шакал! 10 шакалов из 10!
 gulp.task('images', function() {
-  gulp.src(paths.images + '/**/*.{png,jpg,gif,svg}')
-    .pipe(cache(paths.images))
-    .pipe(remember(paths.images))
+  gulp.src(paths.img + '/**/*.{png,jpg,gif,svg}')
+    .pipe(cache(paths.img))
+    .pipe(remember(paths.img))
     .pipe(image({
       verbose: true
     }))
@@ -141,16 +145,6 @@ gulp.task('cache', ['pug', 'html'], function() {
       type: 'timestamp'
     }))
     .pipe(gulp.dest(paths.html));
-=======
-  .pipe(plumber({errorHandler: onError}))
-  .pipe(eslint())
-  .pipe(eslint.format())
-  .pipe(babel())
-  .pipe(concat('scripts.js'))
-  .pipe(uglify())
-  .pipe(gulp.dest(paths.js))
-  .pipe(reload({stream: true}));
->>>>>>> 1c8df2f24cb3d3edcba9e768f6c2ef961c58fdf8
 });
 
 // Запуск локального сервера
