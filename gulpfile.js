@@ -37,8 +37,8 @@ var paths = {
   scripts: 'assets/source/scripts/',
   js: 'assets/js/',
   templates: 'templates/',
-  images: 'assets/source/images/',
-  bundles: 'assets/images/',
+  images: 'assets/source/img/',
+  bundles: 'assets/img/',
   html: './'
 };
 
@@ -94,7 +94,7 @@ gulp.task('pug', function() {
     .pipe(cache(paths.templates))
     .pipe(remember(paths.templates))
     .pipe(plumber({errorHandler: onError}))
-    .pipe(pug({pretty: false}))
+    .pipe(pug({pretty: true}))
     .pipe(gulp.dest(paths.html));
 });
 
