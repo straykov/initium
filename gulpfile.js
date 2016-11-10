@@ -1,6 +1,5 @@
 'use strict';
 
-<<<<<<< HEAD
 var gulp = require('gulp'),
     rename = require('gulp-rename'),
     gutil = require('gulp-util'),
