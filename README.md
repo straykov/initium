@@ -1,9 +1,13 @@
 #Инитум
 Шаблон помогает быстро начать вёрстку проекта.
 
-Перед первым запуском:
+Перед началом работы нужно установить зависимости:
 ```bash
 sudo npm install
+```
+Можно Ярном, если есть:
+```bash
+yarn
 ```
 
 ##Режимы
@@ -26,7 +30,7 @@ gulp external-world
 Шаблоны собираются из папки `templates` с помощью [pug](https://pugjs.org). Составные части лежат в `blocks`. Боевые файлы автоматически собираются в корне проекта.
 
 ##Стили
-Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`.
+Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш.
 
 ##Кэш
 При изменении в папке, которая кэшируется, происходит вызов функции `clearCache` которая удаляет с буфера удаленный файл.
@@ -54,6 +58,15 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 }
 ```
 [CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
+
+##Сжатие картинок
+Картинки кладутся в `assets/source/img/` и с помощью [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) минифицируются в папку `assets/img/`.
+
+##Скрипты
+Можно писать на es2015 — подключен и работает Бабель. Включен jQuery 3. Работает антикэш.
+
+##Авторы
+[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy).
 
 --
 Используется в проектах [Кодельной](http://code.straykov.ru) <img src="http://code.straykov.ru/assets/img/logo.svg" height="19"> и [Гридли](http://gridly.ru)

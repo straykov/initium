@@ -127,7 +127,7 @@ gulp.task('scripts', function() {
     .pipe(reload({stream: true}));
 });
 
-// Сжимает как шакал! 10 шакалов из 10!
+// Сжатие картинок
 gulp.task('images', function() {
   gulp.src(paths.img + '/**/*.{png,jpg,gif,svg}')
     .pipe(cache(paths.img))
@@ -138,7 +138,7 @@ gulp.task('images', function() {
     .pipe(gulp.dest(paths.bundles));
 });
 
-// Очистка кэша для CSS и JS файлов
+// Очистка кэша для яваскрипта и ЦССа
 gulp.task('cache', ['pug', 'html'], function() {
   gulp.src(paths.html + '*.html')
     .pipe(cachebust({
