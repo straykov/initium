@@ -15,11 +15,10 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     pug = require('gulp-pug'),
-    debug = require('gulp-debug'),
     inline  = require('postcss-inline-svg'),
     cache = require('gulp-cached'),
     remember = require('gulp-remember'),
-    image = require('gulp-image'),
+    image = require('gulp-imagemin'),
     cachebust = require('gulp-cache-bust'),
     reload = browserSync.reload;
 
@@ -95,7 +94,7 @@ gulp.task('pug', function() {
     .pipe(cache(paths.templates))
     .pipe(remember(paths.templates))
     .pipe(plumber({errorHandler: onError}))
-    .pipe(pug({pretty: true}))
+    .pipe(pug({pretty: false}))
     .pipe(gulp.dest(paths.html));
 });
 
@@ -127,7 +126,9 @@ gulp.task('images', function() {
   gulp.src(paths.images + '/**/*.{png,jpg,gif,svg}')
     .pipe(cache(paths.images))
     .pipe(remember(paths.images))
-    .pipe(image())
+    .pipe(image({
+      verbose: true
+    }))
     .pipe(gulp.dest(paths.bundles));
 });
 
