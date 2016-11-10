@@ -5,7 +5,7 @@
 ```bash
 sudo npm install
 ```
-Можно Ярном:
+Можно Ярном, если есть:
 ```bash
 yarn
 ```
