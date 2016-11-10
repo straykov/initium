@@ -1,5 +1,6 @@
 'use strict';
 
+<<<<<<< HEAD
 var gulp = require('gulp'),
     rename = require('gulp-rename'),
     gutil = require('gulp-util'),
@@ -20,7 +21,8 @@ var gulp = require('gulp'),
     remember = require('gulp-remember'),
     image = require('gulp-imagemin'),
     cachebust = require('gulp-cache-bust'),
-    reload = browserSync.reload;
+    reload = browserSync.reload,
+    babel = require("gulp-babel");
 
 var processors = [
   imprt(),
@@ -112,6 +114,7 @@ gulp.task('styles', function () {
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts + '*.js')
+<<<<<<< HEAD
     .pipe(cache(paths.scripts))
     .pipe(remember(paths.scripts))
     .pipe(plumber({errorHandler: onError}))
@@ -139,6 +142,16 @@ gulp.task('cache', ['pug', 'html'], function() {
       type: 'timestamp'
     }))
     .pipe(gulp.dest(paths.html));
+=======
+  .pipe(plumber({errorHandler: onError}))
+  .pipe(eslint())
+  .pipe(eslint.format())
+  .pipe(babel())
+  .pipe(concat('scripts.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest(paths.js))
+  .pipe(reload({stream: true}));
+>>>>>>> 1c8df2f24cb3d3edcba9e768f6c2ef961c58fdf8
 });
 
 // Запуск локального сервера
