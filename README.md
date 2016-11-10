@@ -49,5 +49,8 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 ```
 [CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
 
+##Авторы
+[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy).
+
 --
 Используется в проектах [Кодельной](http://code.straykov.ru) <img src="http://code.straykov.ru/assets/img/logo.svg" height="19"> и [Гридли](http://gridly.ru)
