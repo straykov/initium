@@ -32,9 +32,6 @@ gulp external-world
 ##Стили
 Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш.
 
-##Кэш
-При изменении в папке, которая кэшируется, происходит вызов функции `clearCache` которая удаляет с буфера удаленный файл.
-
 ##Минификация изображений
 Изображения минифицируются с помощью [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) пакета.
 
