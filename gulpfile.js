@@ -1,6 +1,8 @@
 'use strict';
 
 var gulp = require('gulp'),
+    path = require('path'),
+    del = require('del'),
     rename = require('gulp-rename'),
     gutil = require('gulp-util'),
     plumber = require('gulp-plumber'),
@@ -17,13 +19,12 @@ var gulp = require('gulp'),
     pug = require('gulp-pug'),
     inline  = require('postcss-inline-svg'),
     cache = require('gulp-cached'),
-    remember = require('gulp-remember'),
     image = require('gulp-imagemin'),
+    debug = require('gulp-debug'),
     cachebust = require('gulp-cache-bust'),
     eslint = require('gulp-eslint'),
     babel = require("gulp-babel"),
     reload = browserSync.reload;
-
 
 var processors = [
   imprt(),
@@ -47,58 +48,39 @@ var paths = {
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
-  gulp.start('cache', 'images', 'styles', 'scripts');
+  gulp.start('cache', 'img', 'styles', 'scripts');
 });
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('cache', 'images', 'styles', 'scripts', 'watch', 'server');
+  gulp.start('cache', 'img', 'styles', 'scripts', 'watch', 'server');
 });
 
 // Туннель
 gulp.task('external-world', function() {
-  gulp.start('cache', 'images', 'styles', 'scripts', 'watch', 'web-server');
+  gulp.start('cache', 'img', 'styles', 'scripts', 'watch', 'web-server');
 });
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  var templates = gulp.watch(paths.templates + '**/*.pug', ['cache']);
-  var styles = gulp.watch(paths.styles + '**/*.pcss', ['styles']);
-  var scripts = gulp.watch(paths.scripts + '*.js', ['scripts']);
-  var images = gulp.watch(paths.img + '**/*.{png,jpg,gif,svg}', ['images']);
-
-  templates.on('change', function(event) {
+  gulp.watch(paths.templates + '**/*.pug', ['cache']);
+  gulp.watch(paths.styles + '**/*.pcss', ['styles']);
+  gulp.watch(paths.scripts + '*.js', ['scripts']);
+  gulp.watch(paths.img + '*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
     if (event.type === 'deleted') {
-      clearCache(event, paths.templates);
+      del(paths.bundles + path.basename(event.path));
+      delete cache.caches['img'][event.path];
     }
   });
-
-  scripts.on('change', function(event) {
-    if (event.type === 'deleted') {
-      clearCache(event, paths.scripts);
-    }
-  });
-
-  images.on('change', function(event) {
-    if (event.type === 'deleted') {
-      clearCache(event, paths.img);
-    }
-  });
-
-  function clearCache (e, path) {
-    delete cache.caches[path][e.path];
-    remember.forget(path, e.path);
-  }
 });
 
 // Шаблонизация
 gulp.task('pug', function() {
   return gulp.src(paths.templates + '*.pug')
-    .pipe(cache(paths.templates))
-    .pipe(remember(paths.templates))
     .pipe(plumber({errorHandler: onError}))
     .pipe(pug({pretty: true}))
-    .pipe(gulp.dest(paths.html));
+    .pipe(gulp.dest(paths.html))
+    .pipe(reload({stream: true}));
 });
 
 // Компиляция стилей, добавление префиксов
@@ -115,8 +97,6 @@ gulp.task('styles', function () {
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
   return gulp.src(paths.scripts + '*.js')
-    .pipe(cache(paths.scripts))
-    .pipe(remember(paths.scripts))
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint())
     .pipe(eslint.format())
@@ -128,10 +108,9 @@ gulp.task('scripts', function() {
 });
 
 // Сжатие картинок
-gulp.task('images', function() {
+gulp.task('img', function() {
   gulp.src(paths.img + '/**/*.{png,jpg,gif,svg}')
-    .pipe(cache(paths.img))
-    .pipe(remember(paths.img))
+    .pipe(cache('img'))
     .pipe(image({
       verbose: true
     }))
@@ -139,7 +118,7 @@ gulp.task('images', function() {
 });
 
 // Очистка кэша для яваскрипта и ЦССа
-gulp.task('cache', ['pug', 'html'], function() {
+gulp.task('cache', ['pug'], function() {
   gulp.src(paths.html + '*.html')
     .pipe(cachebust({
       type: 'timestamp'
