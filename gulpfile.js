@@ -56,7 +56,7 @@ gulp.task('live', function() {
   gulp.start('cache', 'img', 'styles', 'scripts', 'watch', 'server');
 });
 
-// Туннель
+// Запуск туннеля в интернет
 gulp.task('external-world', function() {
   gulp.start('cache', 'img', 'styles', 'scripts', 'watch', 'web-server');
 });
@@ -126,7 +126,7 @@ gulp.task('cache', ['pug'], function() {
     .pipe(gulp.dest(paths.html));
 });
 
-// Запуск локального сервера
+// Локальный сервер
 gulp.task('server', function() {
   portfinder.getPort(function (err, port) {
     browserSync({
@@ -140,7 +140,7 @@ gulp.task('server', function() {
   });
 });
 
-// Запуск локального сервера c туннелем
+// Локальный сервер c туннелем в интернет
 gulp.task('web-server', function() {
   portfinder.getPort(function (err, port) {
     browserSync({
