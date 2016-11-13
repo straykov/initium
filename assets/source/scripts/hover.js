@@ -5,7 +5,7 @@ $(document).ready(function() {
       return;
     }
     $("a")
-        .filter('[href="' + $(this).attr('href') + '"]')
-        .toggleClass("hover", e.type == 'mouseover');
+      .filter('[href="' + $(this).attr('href') + '"]')
+      .toggleClass("hover", e.type == 'mouseover');
   });
 });
