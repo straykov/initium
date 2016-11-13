@@ -75,29 +75,25 @@ gulp.task('watch', function() {
 });
 
 // Шаблонизация
-gulp.task('pug', function(cb) {
+gulp.task('pug', function() {
   gulp.src(paths.templates + '*.pug')
     .pipe(plumber({errorHandler: onError}))
     .pipe(pug({pretty: true}))
     .pipe(gulp.dest(paths.html));
-
-  cb();
 });
 
 // Компиляция стилей, добавление префиксов
-gulp.task('styles', function (cb) {
+gulp.task('styles', function () {
   gulp.src(paths.styles + 'layout.pcss')
     .pipe(plumber({errorHandler: onError}))
     .pipe(postcss(processors))
     .pipe(rename('style.css'))
     .pipe(nano({convertValues: {length: false}}))
     .pipe(gulp.dest(paths.css));
-
-  cb();
 });
 
 // Сборка и минификация скриптов
-gulp.task('scripts', function(cb) {
+gulp.task('scripts', function() {
   gulp.src(paths.scripts + '*.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint())
@@ -106,8 +102,6 @@ gulp.task('scripts', function(cb) {
     .pipe(concat('scripts.js'))
     .pipe(uglify())
     .pipe(gulp.dest(paths.js));
-
-  cb();
 });
 
 // Сжатие картинок
