@@ -3,7 +3,11 @@
 
 Перед началом работы нужно установить зависимости:
 ```bash
-sudo npm install
+npm install
+```
+Можно Ярном, если есть:
+```bash
+yarn
 ```
 Можно Ярном, если есть:
 ```bash
@@ -13,17 +17,26 @@ yarn
 ##Режимы
 Одноразовая сборка:
 ```bash
-gulp
+npm start
+```
+```bash
+yarn start
 ```
 
 Запуск живой сборки на локальном сервере:
 ```bash
-gulp live
+npm run live
+```
+```bash
+yarn live
 ```
 
 Живая сборка на локальном сервере и туннель в интернет:
 ```bash
-gulp external-world
+npm run external-world
+```
+```bash
+yarn external-world
 ```
 
 ##Шаблонизация
