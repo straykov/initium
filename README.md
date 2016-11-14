@@ -32,9 +32,6 @@ gulp external-world
 ##Стили
 Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш.
 
-##Минификация изображений
-Изображения минифицируются с помощью [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) пакета.
-
 ####PostCSS
 Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
 ```css
