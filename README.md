@@ -1,32 +1,45 @@
 #Инитум
 Шаблон помогает быстро начать вёрстку проекта.
 
-Перед первым запуском:
+Перед началом работы нужно установить зависимости:
 ```bash
-sudo npm install
+npm install
+```
+Можно Ярном, если есть:
+```bash
+yarn
 ```
 
 ##Режимы
 Одноразовая сборка:
 ```bash
-gulp
+npm start
+```
+```bash
+yarn start
 ```
 
 Запуск живой сборки на локальном сервере:
 ```bash
-gulp live
+npm run live
+```
+```bash
+yarn live
 ```
 
 Живая сборка на локальном сервере и туннель в интернет:
 ```bash
-gulp external-world
+npm run external-world
+```
+```bash
+yarn external-world
 ```
 
 ##Шаблонизация
-Шаблоны собираются в папке `templates` с помощью тегов `<include>`. Составные части лежат в `blocks`. Переменные — через `@@var` (см. [gulp-html-tag-include](https://github.com/straykov/gulp-html-tag-include)). Боевые файлы автоматически собираются в корне проекта.
+Шаблоны собираются из папки `templates` с помощью [pug](https://pugjs.org). Составные части лежат в `blocks`. Боевые файлы автоматически собираются в корне проекта.
 
 ##Стили
-Верстаются в `assets/source/styles/layout.css`, компилируются в `assets/css/style.css`.
+Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш.
 
 ####PostCSS
 Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
@@ -48,6 +61,15 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 }
 ```
 [CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
+
+##Сжатие картинок
+Картинки кладутся в `assets/source/img/` и с помощью [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) минифицируются в папку `assets/img/`.
+
+##Скрипты
+Можно писать на es2015 — подключен и работает Бабель. Включен jQuery 3. Работает антикэш.
+
+##Авторы
+[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy).
 
 --
 Используется в проектах [Кодельной](http://code.straykov.ru) <img src="http://code.straykov.ru/assets/img/logo.svg" height="19"> и [Гридли](http://gridly.ru)
