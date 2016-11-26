@@ -92,6 +92,15 @@ gulp.task('styles', function () {
     .pipe(gulp.dest(paths.css));
 });
 
+// Lint for god sick 
+gulp.task('styles:lint', function () {
+  gulp.src(paths.styles + '**.pcss')
+    .pipe(postcss([
+      require('stylelint')(),
+      require('postcss-reporter')({clearMessages: true})]
+    ));
+});
+
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
   gulp.src(paths.scripts + '*.js')
