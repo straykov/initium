@@ -6,10 +6,6 @@ insert_final_newline = true
 [**.{js,pug,pcss}]
 charset = utf-8
 
-[gulpfile.js]
-indent_style = space
-indent_size = 4
-
 [assets/source/scripts/**.js]
 indent_style = space
 indent_size = 2
@@ -23,6 +19,6 @@ indent_style = space
 indent_size = 2
 
 # Matches the exact files either package.json
-[package.json]
+[package.json, gulpfile.js]
 indent_style = space
 indent_size = 2
