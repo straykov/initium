@@ -60,6 +60,11 @@ gulp.task('external-world', function() {
   gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch', 'web-server');
 });
 
+// Cборка с вотчем без браузерсинка
+gulp.task('no-server', function() {
+    gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch');
+});
+
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
   gulp.watch(paths.templates + '**/*.pug', ['pug']);

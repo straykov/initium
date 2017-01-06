@@ -35,6 +35,14 @@ npm run external-world
 yarn external-world
 ```
 
+Сборка на локальном сервере с watch'ем без browsersync'а:
+```bash
+npm run no-server
+```
+```bash
+yarn no-server
+```
+
 ##Шаблонизация
 Шаблоны собираются из папки `templates` с помощью [pug](https://pugjs.org). Составные части лежат в `blocks`. Боевые файлы автоматически собираются в корне проекта.
 
