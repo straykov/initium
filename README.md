@@ -27,20 +27,20 @@ npm run live
 yarn live
 ```
 
+Сборка без автоматической перезагрузки страниц:
+```bash
+npm run no-server
+```
+```bash
+yarn no-server
+```
+
 Живая сборка на локальном сервере и туннель в интернет:
 ```bash
 npm run external-world
 ```
 ```bash
 yarn external-world
-```
-
-Сборка на локальном сервере с watch'ем без browsersync'а:
-```bash
-npm run no-server
-```
-```bash
-yarn no-server
 ```
 
 ##Шаблонизация
@@ -52,7 +52,7 @@ yarn no-server
 ####PostCSS
 Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
 ```css
-$f_Helvetica: "Helvetica Neue", Arial, sans-serif;
+$helvetica: "Helvetica Neue", Arial, sans-serif;
 ```
 Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов и модификаторов в БЭМе:
 ```css
@@ -77,7 +77,7 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 Можно писать на es2015 — подключен и работает Babel. Включен jQuery 3. Работает антикэш.
 
 ##Авторы
-[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko).
+[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko), [Никита Ейбог](https://github.com/shrpne).
 
 --
 Используется в проектах [Кодельной](http://codecode.ru)
