@@ -131,9 +131,7 @@ gulp.task('img', function() {
 // Очистка кэша для яваскрипта и ЦССа
 gulp.task('cache', function() {
   gulp.src(paths.html + '*.html')
-    .pipe(cachebust({
-      type: 'timestamp'
-    }))
+    .pipe(cachebust())
     .pipe(gulp.dest(paths.html))
     .pipe(reload({stream: true}));
 });
