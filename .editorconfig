@@ -1,0 +1,24 @@
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Set default charset
+[**.{js,pug,pcss}]
+charset = utf-8
+
+[assets/source/scripts/**.js]
+indent_style = space
+indent_size = 2
+
+[templates/**.pug]
+indent_style = space
+indent_size = 2
+
+[assets/source/**.pcss]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json
+[package.json, gulpfile.js]
+indent_style = space
+indent_size = 2
