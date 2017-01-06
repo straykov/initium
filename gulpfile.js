@@ -56,6 +56,11 @@ gulp.task('external-world', function() {
   gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch', 'web-server');
 });
 
+// Cборка с вотчем без браузерсинка
+gulp.task('no-server', function() {
+    gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch');
+});
+
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
   gulp.watch(paths.templates + '**/*.pug', ['pug']);
@@ -88,6 +93,15 @@ gulp.task('styles', function () {
     .pipe(gulp.dest(paths.css));
 });
 
+// Lint for god sick 
+gulp.task('styles:lint', function () {
+  gulp.src(paths.styles + '**.pcss')
+    .pipe(postcss([
+      require('stylelint')(),
+      require('postcss-reporter')({clearMessages: true})]
+    ));
+});
+
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
   gulp.src(paths.scripts + '*.js')
@@ -113,9 +127,7 @@ gulp.task('img', function() {
 // Очистка кэша для яваскрипта и ЦССа
 gulp.task('cache', function() {
   gulp.src(paths.html + '*.html')
-    .pipe(cachebust({
-      type: 'timestamp'
-    }))
+    .pipe(cachebust())
     .pipe(gulp.dest(paths.html))
     .pipe(reload({stream: true}));
 });
