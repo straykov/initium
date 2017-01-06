@@ -39,7 +39,7 @@ yarn external-world
 Шаблоны собираются из папки `templates` с помощью [pug](https://pugjs.org). Составные части лежат в `blocks`. Боевые файлы автоматически собираются в корне проекта.
 
 ##Стили
-Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш.
+Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш — к ссылкам на стили и скрипты добавляется md5-хэш.
 
 ####PostCSS
 Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
@@ -66,7 +66,7 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
 Картинки кладутся в `assets/source/img/` и с помощью [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) минифицируются в папку `assets/img/`.
 
 ##Скрипты
-Можно писать на es2015 — подключен и работает Бабель. Включен jQuery 3. Работает антикэш.
+Можно писать на es2015 — подключен и работает Babel. Включен jQuery 3. Работает антикэш.
 
 ##Авторы
 [Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko).
