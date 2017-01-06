@@ -8,10 +8,8 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     portfinder = require('portfinder'),
     postcss = require('gulp-postcss'),
-    nested = require('postcss-nested'),
+    precss = require('precss'),
     cssnext = require('postcss-cssnext'),
-    vars = require('postcss-simple-vars'),
-    imprt = require('postcss-import'),
     nano = require('gulp-cssnano'),
     browserSync = require("browser-sync"),
     uglify = require('gulp-uglify'),
@@ -26,10 +24,8 @@ var gulp = require('gulp'),
     reload = browserSync.reload;
 
 var processors = [
-  imprt(),
+  precss(),
   cssnext(),
-  vars(),
-  nested(),
   inline()
 ];
 
