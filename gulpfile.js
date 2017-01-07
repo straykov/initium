@@ -8,10 +8,8 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     portfinder = require('portfinder'),
     postcss = require('gulp-postcss'),
-    nested = require('postcss-nested'),
+    precss = require('precss'),
     cssnext = require('postcss-cssnext'),
-    vars = require('postcss-simple-vars'),
-    imprt = require('postcss-import'),
     nano = require('gulp-cssnano'),
     browserSync = require("browser-sync"),
     uglify = require('gulp-uglify'),
@@ -26,10 +24,8 @@ var gulp = require('gulp'),
     reload = browserSync.reload;
 
 var processors = [
-  imprt(),
+  precss(),
   cssnext(),
-  vars(),
-  nested(),
   inline()
 ];
 
@@ -58,6 +54,11 @@ gulp.task('live', function() {
 // Запуск туннеля в интернет
 gulp.task('external-world', function() {
   gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch', 'web-server');
+});
+
+// Cборка с вотчем без браузерсинка
+gulp.task('no-server', function() {
+  gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch');
 });
 
 // Федеральная служба по контролю за оборотом файлов
@@ -126,9 +127,7 @@ gulp.task('img', function() {
 // Очистка кэша для яваскрипта и ЦССа
 gulp.task('cache', function() {
   gulp.src(paths.html + '*.html')
-    .pipe(cachebust({
-      type: 'timestamp'
-    }))
+    .pipe(cachebust())
     .pipe(gulp.dest(paths.html))
     .pipe(reload({stream: true}));
 });

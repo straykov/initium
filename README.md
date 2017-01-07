@@ -5,7 +5,7 @@
 ```bash
 npm install
 ```
-Можно Ярном, если есть:
+Удобнее через [Yarn](https://yarnpkg.com) (здесь и далее идентичные команды — парами, выбирайте, что нравится больше):
 ```bash
 yarn
 ```
@@ -27,6 +27,14 @@ npm run live
 yarn live
 ```
 
+Сборка без автоматической перезагрузки страниц:
+```bash
+npm run no-server
+```
+```bash
+yarn no-server
+```
+
 Живая сборка на локальном сервере и туннель в интернет:
 ```bash
 npm run external-world
@@ -39,12 +47,12 @@ yarn external-world
 Шаблоны собираются из папки `templates` с помощью [pug](https://pugjs.org). Составные части лежат в `blocks`. Боевые файлы автоматически собираются в корне проекта.
 
 ##Стили
-Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш.
+Верстаются в `assets/source/styles/layout.pcss`, компилируются в `assets/css/style.css`. Работает антикэш — к ссылкам на стили добавляется md5-хэш.
 
 ####PostCSS
-Переменные ([postcss-simple-vars](https://github.com/postcss/postcss-simple-vars)):
+Переменные ([precss](https://github.com/jonathantneal/precss#variables)):
 ```css
-$f_Helvetica: "Helvetica Neue", Arial, sans-serif;
+$helvetica: "Helvetica Neue", Arial, sans-serif;
 ```
 Вложенность ([postcss-nested](https://github.com/postcss/postcss-nested)) для элементов и модификаторов в БЭМе:
 ```css
@@ -60,16 +68,16 @@ $f_Helvetica: "Helvetica Neue", Arial, sans-serif;
   }
 }
 ```
-[CSSNext](http://cssnext.io). Штуки из CSS 4, префиксы, кастомные медиа-запросы.
+CSSNext: префиксы, [кастомные медиа-запросы](https://github.com/postcss/postcss-custom-media) и другое.
 
 ##Сжатие картинок
 Картинки кладутся в `assets/source/img/` и с помощью [gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) минифицируются в папку `assets/img/`.
 
 ##Скрипты
-Можно писать на es2015 — подключен и работает Бабель. Включен jQuery 3. Работает антикэш.
+Можно писать на es2015 — подключен и работает Babel. Включен jQuery 3. Работает антикэш (см. абзац о стилях).
 
 ##Авторы
-[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko).
+[Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Олег Алешкин](https://github.com/AleshaOleg), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko), [Никита Ейбог](https://github.com/shrpne).
 
 --
-Используется в проектах [Кодельной](http://codecode.ru)
+Используется в проектах [Кодельной](http://codecode.ru): приходите работать
