@@ -58,7 +58,7 @@ gulp.task('external-world', function() {
 
 // Cборка с вотчем без браузерсинка
 gulp.task('no-server', function() {
-    gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch');
+  gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch');
 });
 
 // Федеральная служба по контролю за оборотом файлов

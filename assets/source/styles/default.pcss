@@ -18,20 +18,6 @@ table {
   border-spacing: 0;
 }
 
-/* Ссылки */
-:root {
-  --link: {
-    color: $link;
-    text-decoration: none;
-    transition: 0.3s ease;
-
-    &:hover, &.hover {
-      color: $link-hover;
-      transition: 0s ease;
-    }
-  };
-}
-
 /* Основные стили */
 html {
   background: rgba(255, 255, 255, 1);
@@ -43,8 +29,7 @@ body {
   line-height: 20px;
 }
 
+/* Ссылки без дефолтного подчёркивания */
 a {
-  @apply --link;
-
   text-decoration: none;
 }
