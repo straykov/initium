@@ -1,31 +1,30 @@
 'use strict';
 
-import gulp from 'gulp';
 import path from 'path';
 import del from 'del';
+
+import gulp from 'gulp';
 import rename from 'gulp-rename';
 import gutil from 'gulp-util';
 import plumber from 'gulp-plumber';
 import portfinder from 'portfinder';
-import postcss from 'gulp-postcss';
-import precss from 'precss';
-import cssnext from 'postcss-cssnext';
 import nano from 'gulp-cssnano';
-import { create as browserSync, reload as reload } from 'browser-sync';
-import uglify from 'gulp-uglify';
-import concat from 'gulp-concat';
 import pug from 'gulp-pug';
-import inline  from 'postcss-inline-svg';
 import cache from 'gulp-cached';
 import image from 'gulp-imagemin';
 import cachebust from 'gulp-cache-bust';
-import eslint from 'gulp-eslint';
-import babel from "gulp-babel";
-import debuga from 'debuga';
 import errorHandler from 'gulp-plumber-error-handler';
-import statsLogger from 'webpack-stats-logger';
-import makeWebpackConfig from './webpack.config.js';
+import { create as browserSync, reload as reload } from 'browser-sync';
+
+import postcss from 'gulp-postcss';
+import precss from 'precss';
+import cssnext from 'postcss-cssnext';
+import inline  from 'postcss-inline-svg';
+
 import webpack from 'webpack';
+import makeWebpackConfig from './webpack.config.js';
+import statsLogger from 'webpack-stats-logger';
+import debuga from 'debuga';
 
 
 var processors = [
@@ -53,12 +52,12 @@ gulp.task('default', function() {
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('pug', 'styles', 'scripts:watch', 'img', 'cache', 'watch', 'server');
+  gulp.start('pug', 'styles', 'webpack:watch', 'img', 'cache', 'watch', 'server');
 });
 
 // Запуск туннеля в интернет
 gulp.task('external-world', function() {
-  gulp.start('pug', 'styles', 'scripts:watch', 'img', 'cache', 'watch', 'web-server');
+  gulp.start('pug', 'styles', 'webpack:watch', 'img', 'cache', 'watch', 'web-server');
 });
 
 // Cборка с вотчем без браузерсинка
@@ -70,7 +69,7 @@ gulp.task('no-server', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.templates + '**/*.pug', ['pug']);
   gulp.watch(paths.styles + '**/*.pcss', ['styles', 'cache']);
-  gulp.watch(paths.html + '*.html', ['cache']);
+  gulp.watch(paths.html + '*.html', ['html', 'cache']);
   gulp.watch(paths.img + '*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
     if (event.type === 'deleted') {
       del(paths.bundles + path.basename(event.path));
@@ -137,9 +136,9 @@ function runWebpack(watch = false) {
   };
 }
 
-gulp.task('scripts', runWebpack(false));
+gulp.task('webpack', runWebpack(false));
 
-gulp.task('scripts:watch', runWebpack(true));
+gulp.task('webpack:watch', runWebpack(true));
 
 
 // Сжатие картинок
@@ -153,7 +152,7 @@ gulp.task('img', function() {
 });
 
 // Очистка кэша для яваскрипта и ЦССа
-gulp.task('cache', function() {
+gulp.task('cache', function cacheTask() {
   gulp.src(paths.html + '*.html')
     .pipe(cachebust())
     .pipe(gulp.dest(paths.html))
@@ -173,7 +172,7 @@ var bsConfig = {
   server: {
     baseDir: '.',
     directory: false,
-    middleware: NODE_ENV !== 'production' ? [debuga()] : []
+    middleware: NODE_ENV !== 'production' ? [debuga({ dist: '.' })] : []
   }
 };
 

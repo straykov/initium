@@ -29,6 +29,7 @@ export default function makeWebpackConfig({
   eslint = true
 }) {
   return {
+    context: __dirname,
     entry: path.resolve('./assets/source/scripts/app.js'),
     watch,
     debug,
@@ -68,18 +69,18 @@ export default function makeWebpackConfig({
       }].filter(loader => loader)
     },
     plugins: [
-             new HappyPack({
-               loaders: ['babel'],
-               threads: 4,
-               verbose: false,
-               cache: true
-             }),
-             new webpack.DefinePlugin({
-               'process.env': {
-                 NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-               }
-             })
-           ].concat(debug ? [
+        new HappyPack({
+          loaders: ['babel'],
+          threads: 4,
+          verbose: false,
+          cache: true
+        }),
+        new webpack.DefinePlugin({
+          'process.env': {
+           NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+         }
+       })
+     ].concat(debug ? [
         new NpmInstallPlugin({saveDev: true}),
         new webpack.HotModuleReplacementPlugin()
       ] : [
