@@ -41,3 +41,5 @@ bower_components
 node_modules
 npm-debug.log
 .happypack/
+
+assets/js/*

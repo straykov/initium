@@ -14,7 +14,7 @@ import cache from 'gulp-cached';
 import image from 'gulp-imagemin';
 import cachebust from 'gulp-cache-bust';
 import errorHandler from 'gulp-plumber-error-handler';
-import { create as browserSync, reload as reload } from 'browser-sync';
+import browserSync from 'browser-sync';
 
 import postcss from 'gulp-postcss';
 import precss from 'precss';
@@ -156,14 +156,14 @@ gulp.task('cache', function cacheTask() {
   gulp.src(paths.html + '*.html')
     .pipe(cachebust())
     .pipe(gulp.dest(paths.html))
-    .pipe(reload({stream: true}));
+    .pipe(browserSync.reload({stream: true}));
 });
 
-const bs = browserSync('server');
 var bsConfig = {
   files: ['*'],
   reloadOnRestart: true,
   port: null,
+  tunnel: null,
   snippetOptions: {
     rule: {
       match: /<\/body>/i
@@ -182,8 +182,8 @@ gulp.task('server', () => (
     if (err) throw err;
     
     bsConfig.port = port;
-    
-    bs.init(bsConfig);
+  
+    browserSync(bsConfig);
   })
 ));
 
@@ -195,15 +195,15 @@ gulp.task('web-server', () => (
   
     bsConfig.port = port;
     bsConfig.tunnel = true;
-    
-    bs.init(bsConfig);
+  
+    browserSync(bsConfig);
   })
 ));
 
 // Рефреш ХТМЛ-страниц
 gulp.task('html', function () {
   gulp.src(paths.html + '*.html')
-    .pipe(reload({stream: true}));
+    .pipe(browserSync.reload({stream: true}));
 });
 
 // Ошибки
