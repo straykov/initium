@@ -66,7 +66,6 @@ gulp.task('watch', function() {
   gulp.watch(paths.templates + '**/*.pug', ['pug']);
   gulp.watch(paths.styles + '**/*.pcss', ['styles', 'cache']);
   gulp.watch(paths.scripts + '*.js', ['scripts', 'cache']);
-  gulp.watch(paths.html + '*.html', ['cache']);
   gulp.watch(paths.img + '*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
     if (event.type === 'deleted') {
       del(paths.bundles + path.basename(event.path));
@@ -80,7 +79,8 @@ gulp.task('pug', function() {
   gulp.src(paths.templates + '*.pug')
     .pipe(plumber({errorHandler: onError}))
     .pipe(pug({pretty: true}))
-    .pipe(gulp.dest(paths.html));
+    .pipe(gulp.dest(paths.html))
+    .pipe(reload({stream: true}));
 });
 
 // Компиляция стилей, добавление префиксов
