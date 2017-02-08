@@ -137,7 +137,7 @@ gulp.task('server', function() {
   portfinder.getPort(function (err, port) {
     browserSync({
       server: {
-        baseDir: "."
+        baseDir: paths.html
       },
       host: 'localhost',
       notify: false,
