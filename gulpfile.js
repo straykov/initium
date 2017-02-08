@@ -31,14 +31,14 @@ var processors = [
 
 // Ресурсы проекта
 var paths = {
-  styles: 'assets/source/styles/',
-  css: 'assets/css/',
-  scripts: 'assets/source/scripts/',
-  js: 'assets/js/',
-  templates: 'templates/',
-  img: 'assets/source/img/',
-  bundles: 'assets/img/',
-  html: './'
+  styles: 'src/components/',
+  css: 'public/assets/css/',
+  scripts: 'src/components/',
+  js: 'public/assets/js/',
+  templates: 'src/templates/',
+  img: 'src/components/',
+  bundles: 'public/assets/img/',
+  html: './public'
 };
 
 // Одноразовая сборка проекта
@@ -65,8 +65,8 @@ gulp.task('no-server', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.templates + '**/*.pug', ['pug']);
   gulp.watch(paths.styles + '**/*.pcss', ['styles', 'cache']);
-  gulp.watch(paths.scripts + '*.js', ['scripts', 'cache']);
-  gulp.watch(paths.img + '*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
+  gulp.watch(paths.scripts + '**/*.js', ['scripts', 'cache']);
+  gulp.watch(paths.img + '**/*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
     if (event.type === 'deleted') {
       del(paths.bundles + path.basename(event.path));
       delete cache.caches['img'][event.path];
@@ -93,7 +93,7 @@ gulp.task('styles', function () {
     .pipe(gulp.dest(paths.css));
 });
 
-// Lint for god sick 
+// Lint for god sick
 gulp.task('styles:lint', function () {
   gulp.src(paths.styles + '**.pcss')
     .pipe(postcss([
@@ -104,7 +104,7 @@ gulp.task('styles:lint', function () {
 
 // Сборка и минификация скриптов
 gulp.task('scripts', function() {
-  gulp.src(paths.scripts + '*.js')
+  gulp.src(paths.scripts + '**/*.js')
     .pipe(plumber({errorHandler: onError}))
     .pipe(eslint())
     .pipe(eslint.format())
@@ -151,7 +151,7 @@ gulp.task('web-server', function() {
   portfinder.getPort(function (err, port) {
     browserSync({
       server: {
-        baseDir: "."
+        baseDir: paths.html
       },
       tunnel: true,
       host: 'localhost',

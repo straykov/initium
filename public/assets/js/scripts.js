@@ -1,0 +1,1 @@
+"use strict";var example=function(e){return console.log("Hello, "+e)};example("World!");
