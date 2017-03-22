@@ -1,36 +1,39 @@
 'use strict';
 
-var gulp = require('gulp'),
-    path = require('path'),
-    del = require('del'),
-    rename = require('gulp-rename'),
-    gutil = require('gulp-util'),
-    plumber = require('gulp-plumber'),
-    portfinder = require('portfinder'),
-    postcss = require('gulp-postcss'),
-    precss = require('precss'),
-    cssnext = require('postcss-cssnext'),
-    nano = require('gulp-cssnano'),
-    browserSync = require("browser-sync"),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    pug = require('gulp-pug'),
-    inline  = require('postcss-inline-svg'),
-    cache = require('gulp-cached'),
-    image = require('gulp-imagemin'),
-    cachebust = require('gulp-cache-bust'),
-    eslint = require('gulp-eslint'),
-    babel = require("gulp-babel"),
-    reload = browserSync.reload;
 
-var processors = [
+const gulp = require('gulp'),
+  path = require('path'),
+  fs = require('fs'),
+  del = require('del'),
+  rename = require('gulp-rename'),
+  gutil = require('gulp-util'),
+  plumber = require('gulp-plumber'),
+  portfinder = require('portfinder'),
+  postcss = require('gulp-postcss'),
+  precss = require('precss'),
+  cssnext = require('postcss-cssnext'),
+  nano = require('gulp-cssnano'),
+  browserSync = require("browser-sync"),
+  uglify = require('gulp-uglify'),
+  concat = require('gulp-concat'),
+  twig = require('gulp-twig'),
+  data = require('gulp-data'),
+  inline = require('postcss-inline-svg'),
+  cache = require('gulp-cached'),
+  image = require('gulp-imagemin'),
+  cachebust = require('gulp-cache-bust'),
+  eslint = require('gulp-eslint'),
+  babel = require("gulp-babel"),
+  reload = browserSync.reload;
+
+const processors = [
   precss(),
   cssnext(),
   inline()
 ];
 
 // Ресурсы проекта
-var paths = {
+const paths = {
   styles: 'assets/source/styles/',
   css: 'assets/css/',
   scripts: 'assets/source/scripts/',
@@ -38,32 +41,36 @@ var paths = {
   templates: 'templates/',
   img: 'assets/source/img/',
   bundles: 'assets/img/',
-  html: './'
+  html: './',
+  fonts_src: 'assets/source/fonts/',
+  fonts_dest: 'assets/fonts/',
+  json: 'templates/data.json',
 };
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
-  gulp.start('pug', 'styles', 'scripts', 'cache', 'img');
+  gulp.start('twig', 'styles', 'scripts', 'cache', 'img', 'fonts');
 });
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch', 'server');
+  gulp.start('twig', 'styles', 'scripts', 'img', 'fonts', 'cache', 'watch', 'server');
 });
 
 // Запуск туннеля в интернет
 gulp.task('external-world', function() {
-  gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch', 'web-server');
+  gulp.start('twig', 'styles', 'scripts', 'img', 'fonts', 'cache', 'watch', 'web-server');
 });
 
 // Cборка с вотчем без браузерсинка
 gulp.task('no-server', function() {
-  gulp.start('pug', 'styles', 'scripts', 'img', 'cache', 'watch');
+  gulp.start('twig', 'styles', 'scripts', 'img', 'fonts', 'cache', 'watch');
 });
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
-  gulp.watch(paths.templates + '**/*.pug', ['pug']);
+  gulp.watch(paths.templates + '**/*.twig', ['twig']);
+  gulp.watch(paths.json, ['twig']);
   gulp.watch(paths.styles + '**/*.pcss', ['styles', 'cache']);
   gulp.watch(paths.scripts + '*.js', ['scripts', 'cache']);
   gulp.watch(paths.img + '*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
@@ -75,16 +82,21 @@ gulp.task('watch', function() {
 });
 
 // Шаблонизация
-gulp.task('pug', function() {
-  gulp.src(paths.templates + '*.pug')
+gulp.task('twig', function() {
+  gulp.src(paths.templates + '*.twig')
     .pipe(plumber({errorHandler: onError}))
-    .pipe(pug({pretty: true}))
+    .pipe(data(function(file) {
+      if (fs.existsSync(paths.json)) {
+        return JSON.parse(fs.readFileSync(paths.json));
+      }
+    }))
+    .pipe(twig())
     .pipe(gulp.dest(paths.html))
     .pipe(reload({stream: true}));
 });
 
 // Компиляция стилей, добавление префиксов
-gulp.task('styles', function () {
+gulp.task('styles', function() {
   gulp.src(paths.styles + 'layout.pcss')
     .pipe(plumber({errorHandler: onError}))
     .pipe(postcss(processors))
@@ -93,8 +105,8 @@ gulp.task('styles', function () {
     .pipe(gulp.dest(paths.css));
 });
 
-// Lint for god sick 
-gulp.task('styles:lint', function () {
+// Lint for god sick
+gulp.task('styles:lint', function() {
   gulp.src(paths.styles + '**.pcss')
     .pipe(postcss([
       require('stylelint')(),
@@ -124,6 +136,12 @@ gulp.task('img', function() {
     .pipe(gulp.dest(paths.bundles));
 });
 
+// Копирование шрифтов
+gulp.task('fonts', function() {
+  gulp.src(paths.fonts_src + '*.{woff,woff2}')
+    .pipe(gulp.dest(paths.fonts_dest));
+});
+
 // Очистка кэша для яваскрипта и ЦССа
 gulp.task('cache', function() {
   gulp.src(paths.html + '*.html')
@@ -134,10 +152,13 @@ gulp.task('cache', function() {
 
 // Локальный сервер
 gulp.task('server', function() {
-  portfinder.getPort(function (err, port) {
+  portfinder.getPort(function(err, port) {
     browserSync({
       server: {
-        baseDir: "."
+        baseDir: ".",
+        serveStaticOptions: {
+          extensions: ['html']
+        }
       },
       host: 'localhost',
       notify: false,
@@ -148,7 +169,7 @@ gulp.task('server', function() {
 
 // Локальный сервер c туннелем в интернет
 gulp.task('web-server', function() {
-  portfinder.getPort(function (err, port) {
+  portfinder.getPort(function(err, port) {
     browserSync({
       server: {
         baseDir: "."
@@ -162,13 +183,13 @@ gulp.task('web-server', function() {
 });
 
 // Рефреш ХТМЛ-страниц
-gulp.task('html', function () {
+gulp.task('html', function() {
   gulp.src(paths.html + '*.html')
     .pipe(reload({stream: true}));
 });
 
 // Ошибки
-var onError = function(error) {
+const onError = function(error) {
   gutil.log([
     (error.name + ' in ' + error.plugin).bold.red,
     '',
