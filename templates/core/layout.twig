@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <title>{{ title | default("Инитум") }}</title>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  {% block styles %}{% endblock %}
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="body">
+  {% block body %}{% endblock %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+{% block scripts %}{% endblock %}
+<script src="assets/js/scripts.js"></script>
+</body>
+</html>
