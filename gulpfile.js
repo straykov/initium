@@ -22,7 +22,11 @@ const gulp = require('gulp'),
   babel = require("gulp-babel"),
   duration = require('gulp-duration'),
   sassLint = require('gulp-sass-lint'),
+  cssfont64 = require('gulp-cssfont64'),
+  runSequence = require('run-sequence'),
+  clean = require('gulp-clean'),
   reload = browserSync.reload;
+
 
 const processors = [
   require('postcss-inline-svg'),
@@ -41,29 +45,27 @@ const paths = {
   bundles: 'assets/img/',
   html: './',
   fonts_src: 'assets/source/fonts/',
-  fonts_dest: 'assets/fonts/',
 };
 
 // Одноразовая сборка проекта
 gulp.task('default', function() {
-  gulp.start('twig', 'styles:lint', 'styles', 'scripts', 'cache', 'img', 'fonts');
+  gulp.start('twig', 'styles', 'scripts', 'cache', 'img', 'fonts');
 });
 
 // Запуск живой сборки
 gulp.task('live', function() {
-  gulp.start('twig', 'styles:lint', 'styles', 'scripts', 'img', 'fonts', 'cache', 'watch', 'server');
+  gulp.start('twig', 'styles', 'scripts', 'img', 'cache', 'watch', 'server');
 });
 
 // Cборка с вотчем без браузерсинка
 gulp.task('no-server', function() {
-  gulp.start('twig', 'styles:lint', 'styles', 'scripts', 'img', 'fonts', 'cache', 'watch');
+  gulp.start('twig', 'styles', 'scripts', 'img', 'cache', 'watch');
 });
 
 // Федеральная служба по контролю за оборотом файлов
 gulp.task('watch', function() {
   gulp.watch(paths.templates + '**/*.twig', ['twig']);
-  gulp.watch(paths.json, ['twig']);
-  gulp.watch(paths.styles + '**/*.scss', ['styles:lint', 'styles', 'cache']);
+  gulp.watch(paths.styles + '**/*.scss', ['styles', 'cache']);
   gulp.watch(paths.scripts + '*.js', ['scripts', 'cache']);
   gulp.watch(paths.img + '*.{png,jpg,gif,svg}', ['img']).on('change', function(event) {
     if (event.type === 'deleted') {
@@ -82,9 +84,14 @@ gulp.task('twig', function() {
     .pipe(reload({stream: true}));
 });
 
+//Стили
 gulp.task('styles', function() {
-  gulp
-    .src(paths.styles + 'style.scss')
+  runSequence('styles:lint', 'scss:build', 'inline-fonts', 'concat-fonts', 'clear-fonts')
+});
+
+//сборка сксс
+gulp.task('scss:build', function() {
+  return gulp.src(paths.styles + 'style.scss')
     .pipe(sass({
       outputStyle: 'compressed',
       errLogToConsole: true,
@@ -101,6 +108,27 @@ gulp.task('styles:lint', function() {
     .pipe(sassLint())
     .pipe(sassLint.format())
     .pipe(plumber({errorHandler: onError}));
+});
+
+// Конвертация шрифтов в ксс
+gulp.task('inline-fonts', function() {
+  return gulp.src(paths.fonts_src + '*')
+    .pipe(cssfont64())
+    .pipe(gulp.dest(paths.fonts_src));
+});
+
+// Объединение основных стилей с ксс шрифтов
+gulp.task('concat-fonts', function() {
+  return gulp.src([paths.fonts_src + '*.css', paths.css + 'style.css'])
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest(paths.css))
+    .pipe(reload({stream: true}));
+});
+
+// Удаление ксс шрифтов
+gulp.task('clear-fonts', function() {
+  return gulp.src(paths.fonts_src + '*.css', {read: false})
+    .pipe(clean());
 });
 
 // Сборка и минификация скриптов
@@ -123,12 +151,6 @@ gulp.task('img', function() {
       verbose: true
     }))
     .pipe(gulp.dest(paths.bundles));
-});
-
-// Копирование шрифтов
-gulp.task('fonts', function() {
-  gulp.src(paths.fonts_src + '*.{woff,woff2}')
-    .pipe(gulp.dest(paths.fonts_dest));
 });
 
 // Очистка кэша для яваскрипта и ЦССа

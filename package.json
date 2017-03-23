@@ -21,7 +21,9 @@
     "gulp-babel": "^6.1.2",
     "gulp-cache-bust": "^1.0.2",
     "gulp-cached": "^1.1.0",
+    "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
+    "gulp-cssfont64": "0.0.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-data": "^1.2.1",
     "gulp-duration": "0.0.0",
@@ -39,7 +41,8 @@
     "path": "^0.12.7",
     "portfinder": "^1.0.3",
     "postcss-inline-svg": "^2.1.2",
-    "precss": "^1.4.0"
+    "precss": "^1.4.0",
+    "run-sequence": "^1.2.2"
   },
   "babel": {
     "presets": [
@@ -58,5 +61,5 @@
       "semi": 2
     }
   },
-  "sasslintConfig": ".sass-lint.yml"
+  "sasslintConfig": "sass-lint.yml"
 }
