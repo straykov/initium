@@ -1,0 +1,14 @@
+/* Переменные */
+$helvetica: "Helvetica Neue", Arial, sans-serif;
+
+$link: blue;
+$link-hover: red;
+
+$latex-tablet: "(max-width: 1000px)";
+$latex-mobile: "(max-width: 640px)";
+
+@media #{$latex-mobile} {
+  p {
+    font-size: 12px;
+  }
+}

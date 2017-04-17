@@ -3,18 +3,18 @@ end_of_line = lf
 insert_final_newline = true
 
 # Set default charset
-[**.{js,pug,pcss}]
+[**.{js,trig,scss}]
 charset = utf-8
 
 [assets/source/scripts/**.js]
 indent_style = space
 indent_size = 2
 
-[templates/**.pug]
+[templates/**.twig]
 indent_style = space
 indent_size = 2
 
-[assets/source/**.pcss]
+[assets/source/**.scss]
 indent_style = space
 indent_size = 2
 
