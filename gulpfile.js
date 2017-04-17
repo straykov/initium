@@ -21,7 +21,6 @@ const gulp = require('gulp'),
   eslint = require('gulp-eslint'),
   babel = require("gulp-babel"),
   duration = require('gulp-duration'),
-  sassLint = require('gulp-sass-lint'),
   cssfont64 = require('gulp-cssfont64'),
   runSequence = require('run-sequence'),
   clean = require('gulp-clean'),
@@ -86,7 +85,7 @@ gulp.task('twig', function() {
 
 //Стили
 gulp.task('styles', function() {
-  runSequence('styles:lint', 'scss:build', 'inline-fonts', 'concat-fonts', 'clear-fonts')
+  runSequence('scss:build', 'inline-fonts', 'concat-fonts', 'clear-fonts')
 });
 
 //сборка сксс
@@ -100,14 +99,6 @@ gulp.task('scss:build', function() {
     .pipe(postcss(processors))
     .pipe(duration(`style.css has built`))
     .pipe(gulp.dest(paths.css))
-});
-
-// Lint for god sick
-gulp.task('styles:lint', function() {
-  gulp.src(paths.styles + '**/*.scss')
-    .pipe(sassLint())
-    .pipe(sassLint.format())
-    .pipe(plumber({errorHandler: onError}));
 });
 
 // Конвертация шрифтов в ксс
