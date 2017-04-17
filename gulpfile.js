@@ -26,7 +26,6 @@ const gulp = require('gulp'),
   clean = require('gulp-clean'),
   reload = browserSync.reload;
 
-
 const processors = [
   require('postcss-inline-svg'),
   require('autoprefixer'),
@@ -83,13 +82,13 @@ gulp.task('twig', function() {
     .pipe(reload({stream: true}));
 });
 
-//Стили
+// Стили
 gulp.task('styles', function() {
-  runSequence('scss:build', 'inline-fonts', 'concat-fonts', 'clear-fonts')
+  runSequence('scss', 'inline-fonts', 'concat-fonts', 'clear-fonts')
 });
 
-//сборка сксс
-gulp.task('scss:build', function() {
+// СЦСС
+gulp.task('scss', function() {
   return gulp.src(paths.styles + 'style.scss')
     .pipe(sass({
       outputStyle: 'compressed',
@@ -101,14 +100,14 @@ gulp.task('scss:build', function() {
     .pipe(gulp.dest(paths.css))
 });
 
-// Конвертация шрифтов в ксс
+// Конвертация шрифтов в ЦСС
 gulp.task('inline-fonts', function() {
   return gulp.src(paths.fonts_src + '*')
     .pipe(cssfont64())
     .pipe(gulp.dest(paths.fonts_src));
 });
 
-// Объединение основных стилей с ксс шрифтов
+// Объединение основных стилей со шрифтовым файлом
 gulp.task('concat-fonts', function() {
   return gulp.src([paths.fonts_src + '*.css', paths.css + 'style.css'])
     .pipe(concat('style.css'))
@@ -116,7 +115,7 @@ gulp.task('concat-fonts', function() {
     .pipe(reload({stream: true}));
 });
 
-// Удаление ксс шрифтов
+// Удаление временного файла со шрифтами
 gulp.task('clear-fonts', function() {
   return gulp.src(paths.fonts_src + '*.css', {read: false})
     .pipe(clean());
