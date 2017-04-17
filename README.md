@@ -67,6 +67,7 @@ gulp.task('twig', function() {
 gulp.watch('templates/data.json', ['twig']);
 ```
 
+
 ## Стили
 Верстаются в `assets/source/styles/styles.scss`, компилируются в `assets/css/style.css`. Работает антикэш — к ссылкам на стили добавляется md5-хэш. Предлагается разделение на смысловые слои. Сначала core — фундамент: переменные, сетка, дефолтные стили. Выше — components: кнопки, формы, модальные окна и прочее. Самый высокий уровень — modules: объединение компонентов и стили страниц.
 
@@ -102,5 +103,6 @@ $helvetica: "Helvetica Neue", Arial, sans-serif;
 
 ## Авторы
 [Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Виктор Колб](https://github.com/VictorKolb), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko), [Никита Ейбог](https://github.com/shrpne).
+
 
 Используется в проектах [Кодельной](http://codecode.ru): приходите работать
