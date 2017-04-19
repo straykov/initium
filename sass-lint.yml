@@ -1,0 +1,64 @@
+options:
+  # Не смешивать с дефолтными правилами
+  merge-default-rules: false
+  # Путь до файлов
+  include: '**/*.scss'
+
+# Сами правила
+rules:
+# Правильный хекс
+  no-invalid-hex: 2
+
+# все отступы делаем через 2 пробела
+  indentation:
+    - 1
+    - size: 2
+
+# перед десятичными числами не пишем нулей
+  leading-zero:
+    - 1
+    - include: false
+
+# стараемся не растягивать вложенность 5-6 уровней вложенности уже многовато
+  nesting-depth:
+    - 1
+    - max-depth: 4
+
+# пробелы перед и до
+  space-before-colon: 1
+  space-after-bang: 1
+  space-before-brace: 1
+  space-around-operator: 1
+  space-after-comma: 1
+  space-after-colon: 1
+
+
+# нельзя писать словами
+  no-color-keywords: 1
+
+# одно правило на строку
+  one-declaration-per-line: 1
+
+# Пустая строка перед блоком
+  empty-line-between-blocks: 1
+
+# префиксы расставляет auto-prefixer
+  no-vendor-prefixes: 1
+
+# лишние нули. Например: 2.2000
+  no-trailing-zero: 1
+
+# лишние пробелы
+  no-trailing-whitespace: 1
+
+# опечатки в свойствах
+  no-misspelled-properties: 1
+
+# пустые описания стилей
+  no-empty-rulesets: 1
+
+# дублированные свойства
+  no-duplicate-properties: 1
+
+# не надо айди
+  no-ids: 1
