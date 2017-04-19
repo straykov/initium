@@ -21,7 +21,7 @@ const gulp = require('gulp'),
   eslint = require('gulp-eslint'),
   babel = require("gulp-babel"),
   duration = require('gulp-duration'),
-  sassLint = require('gulp-sass-lint'),
+  sasslint = require('gulp-sass-lint'),
   cssfont64 = require('gulp-cssfont64'),
   runSequence = require('run-sequence'),
   clean = require('gulp-clean'),
@@ -89,7 +89,7 @@ gulp.task('styles', function() {
   runSequence('styles:lint', 'scss:build', 'inline-fonts', 'concat-fonts', 'clear-fonts')
 });
 
-//сборка сксс
+//сборка SCSS
 gulp.task('scss:build', function() {
   return gulp.src(paths.styles + 'style.scss')
     .pipe(sass({
@@ -99,14 +99,14 @@ gulp.task('scss:build', function() {
     }).on('error', onError))
     .pipe(postcss(processors))
     .pipe(duration(`style.css has built`))
-    .pipe(gulp.dest(paths.css))
+    .pipe(gulp.dest(paths.css));
 });
 
-// Lint for god sick
+// Линтинг стилей
 gulp.task('styles:lint', function() {
   gulp.src(paths.styles + '**/*.scss')
-    .pipe(sassLint())
-    .pipe(sassLint.format())
+    .pipe(sasslint())
+    .pipe(sasslint.format())
     .pipe(plumber({errorHandler: onError}));
 });
 
@@ -117,7 +117,7 @@ gulp.task('inline-fonts', function() {
     .pipe(gulp.dest(paths.fonts_src));
 });
 
-// Объединение основных стилей с ксс шрифтов
+// Объединение основных стилей со шрифтовым CSS
 gulp.task('concat-fonts', function() {
   return gulp.src([paths.fonts_src + '*.css', paths.css + 'style.css'])
     .pipe(concat('style.css'))
@@ -125,7 +125,7 @@ gulp.task('concat-fonts', function() {
     .pipe(reload({stream: true}));
 });
 
-// Удаление ксс шрифтов
+// Удаление шрифтового CSS
 gulp.task('clear-fonts', function() {
   return gulp.src(paths.fonts_src + '*.css', {read: false})
     .pipe(clean());

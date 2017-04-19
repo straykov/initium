@@ -1,10 +1,10 @@
 options:
-  # Don't merge default rules
+  # Не смешивать с дефолтными правилами
   merge-default-rules: false
-  # Path to files
+  # Путь до файлов
   include: '**/*.scss'
 
-# Rule Configuration
+# Сами правила
 rules:
 # Правильный хекс
   no-invalid-hex: 2
