@@ -1,32 +1,31 @@
 'use strict';
 
 const gulp = require('gulp'),
-  path = require('path'),
-  fs = require('fs'),
-  del = require('del'),
-  rename = require('gulp-rename'),
-  gutil = require('gulp-util'),
-  plumber = require('gulp-plumber'),
-  portfinder = require('portfinder'),
-  postcss = require('gulp-postcss'),
-  sass = require('gulp-sass'),
-  browserSync = require("browser-sync"),
-  uglify = require('gulp-uglify'),
-  concat = require('gulp-concat'),
-  twig = require('gulp-twig'),
-  data = require('gulp-data'),
-  cache = require('gulp-cached'),
-  image = require('gulp-imagemin'),
-  cachebust = require('gulp-cache-bust'),
-  eslint = require('gulp-eslint'),
-  babel = require("gulp-babel"),
-  duration = require('gulp-duration'),
-  sasslint = require('gulp-sass-lint'),
-  cssfont64 = require('gulp-cssfont64'),
-  runSequence = require('run-sequence'),
-  clean = require('gulp-clean'),
-  reload = browserSync.reload;
-
+      path = require('path'),
+      fs = require('fs'),
+      del = require('del'),
+      rename = require('gulp-rename'),
+      gutil = require('gulp-util'),
+      plumber = require('gulp-plumber'),
+      portfinder = require('portfinder'),
+      postcss = require('gulp-postcss'),
+      sass = require('gulp-sass'),
+      browserSync = require("browser-sync"),
+      uglify = require('gulp-uglify'),
+      concat = require('gulp-concat'),
+      twig = require('gulp-twig'),
+      data = require('gulp-data'),
+      cache = require('gulp-cached'),
+      image = require('gulp-imagemin'),
+      cachebust = require('gulp-cache-bust'),
+      eslint = require('gulp-eslint'),
+      babel = require("gulp-babel"),
+      duration = require('gulp-duration'),
+      sasslint = require('gulp-sass-lint'),
+      cssfont64 = require('gulp-cssfont64'),
+      runSequence = require('run-sequence'),
+      clean = require('gulp-clean'),
+      reload = browserSync.reload;
 
 const processors = [
   require('postcss-inline-svg'),
@@ -34,7 +33,7 @@ const processors = [
   require('css-mqpacker'),
 ];
 
-// Ресурсы проекта
+// Ресурсы
 const paths = {
   styles: 'assets/source/styles/',
   css: 'assets/css/',
@@ -47,9 +46,9 @@ const paths = {
   fonts_src: 'assets/source/fonts/',
 };
 
-// Одноразовая сборка проекта
+// Одноразовая сборка
 gulp.task('default', function() {
-  gulp.start('twig', 'styles', 'scripts', 'cache', 'img', 'fonts');
+  gulp.start('twig', 'styles', 'scripts', 'img', 'cache');
 });
 
 // Запуск живой сборки
@@ -84,13 +83,13 @@ gulp.task('twig', function() {
     .pipe(reload({stream: true}));
 });
 
-//Стили
+// Стили
 gulp.task('styles', function() {
-  runSequence('styles:lint', 'scss:build', 'inline-fonts', 'concat-fonts', 'clear-fonts')
+  runSequence('scss', 'inline-fonts', 'concat-fonts', 'clear-fonts')
 });
 
-//сборка SCSS
-gulp.task('scss:build', function() {
+// Сборка SCSS
+gulp.task('scss', function() {
   return gulp.src(paths.styles + 'style.scss')
     .pipe(sass({
       outputStyle: 'compressed',
@@ -102,15 +101,7 @@ gulp.task('scss:build', function() {
     .pipe(gulp.dest(paths.css));
 });
 
-// Линтинг стилей
-gulp.task('styles:lint', function() {
-  gulp.src(paths.styles + '**/*.scss')
-    .pipe(sasslint())
-    .pipe(sasslint.format())
-    .pipe(plumber({errorHandler: onError}));
-});
-
-// Конвертация шрифтов в ксс
+// Конвертация шрифтов в CSS
 gulp.task('inline-fonts', function() {
   return gulp.src(paths.fonts_src + '*')
     .pipe(cssfont64())
@@ -135,7 +126,6 @@ gulp.task('clear-fonts', function() {
 gulp.task('scripts', function() {
   gulp.src(paths.scripts + '*.js')
     .pipe(plumber({errorHandler: onError}))
-    .pipe(eslint())
     .pipe(eslint.format())
     .pipe(babel())
     .pipe(concat('scripts.js'))
@@ -153,7 +143,7 @@ gulp.task('img', function() {
     .pipe(gulp.dest(paths.bundles));
 });
 
-// Очистка кэша для яваскрипта и ЦССа
+// Очистка кэша для скриптов и стилей
 gulp.task('cache', function() {
   gulp.src(paths.html + '*.html')
     .pipe(cachebust())
@@ -178,7 +168,7 @@ gulp.task('server', function() {
   });
 });
 
-// Рефреш ХТМЛ-страниц
+// Рефреш страниц
 gulp.task('html', function() {
   gulp.src(paths.html + '*.html')
     .pipe(reload({stream: true}));
