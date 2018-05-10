@@ -5,7 +5,8 @@ const gulp = require('gulp'),
       fs = require('fs'),
       del = require('del'),
       rename = require('gulp-rename'),
-      gutil = require('gulp-util'),
+      log = require('fancy-log'),
+      beeper = require('beeper'),
       plumber = require('gulp-plumber'),
       portfinder = require('portfinder'),
       postcss = require('gulp-postcss'),
@@ -176,12 +177,12 @@ gulp.task('html', function() {
 
 // Ошибки
 const onError = function(error) {
-  gutil.log([
+  log([
     (error.name + ' in ' + error.plugin).bold.red,
     '',
     error.message,
     ''
   ].join('\n'));
-  gutil.beep();
+  beeper();
   this.emit('end');
 };
