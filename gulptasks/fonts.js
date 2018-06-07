@@ -2,9 +2,9 @@ const gulp        = require('gulp');
 const cssfont64   = require('gulp-cssfont64');
 const clean       = require('gulp-clean');
 const concat      = require('gulp-concat');
-const paths       = require('./paths');
 const browserSync = require("browser-sync");
 const reload      = browserSync.reload;
+const paths       = require('./paths');
 
 // Конвертация шрифтов в CSS
 function inlineFonts() {
