@@ -1,3 +1,5 @@
+❌ Проект больше не поддерживается
+
 # Инитум
 Шаблон помогает быстро начать вёрстку проекта.
 
@@ -103,4 +105,4 @@ $helvetica: "Helvetica Neue", Arial, sans-serif;
 [Илья Страйков](https://github.com/straykov), [Кирилл Чернаков](https://github.com/Kiryous), [Виктор Колб](https://github.com/VictorKolb), [Арсений Максимов](https://github.com/notarseniy), [Ваня Клименко](https://github.com/vanya-klimenko), [Никита Ейбог](https://github.com/shrpne).
 
 
-Используется в проектах [Кодельной](http://codecode.ru): приходите работать.
+Инитум использовался в проектах [Кодельной](http://codecode.ru).
